@@ -24,6 +24,8 @@ public class App {
             case 1:
                 excercise = new TestExcercise();
             case 2:
+                exercise = new ListExercise(scanner);
+            case 3:
                 running = false;
         }
     }
