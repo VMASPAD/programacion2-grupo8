@@ -1,3 +1,6 @@
+import application.Excercise;
+import application.ListExercise;
+import application.TestExcercise;
 import java.util.Scanner;
 
 public class App {
@@ -5,28 +8,37 @@ public class App {
     private Excercise excercise;
     protected Scanner scanner;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("Hello, World!");
         App app = new App();
         app.run();
     }
+
     private void run() {
         scanner = new Scanner(System.in);
         while (running) {
             selectExcercise(scanner);
-            excercise.run();
+            if (running) {
+                excercise.run();
+            }
         }
+        scanner.close();
     }
-    private void selectExcercise(Scanner scanner){
-        System.out.println("Select excercise or any to exit");
+
+    private void selectExcercise(Scanner scanner) {
+        System.out.println("Select excercise or any other number to exit:");
         int excerciseNumber = scanner.nextInt();
+        scanner.nextLine(); // consume leftover newline
         switch (excerciseNumber) {
             case 1:
                 excercise = new TestExcercise();
+                break;
             case 2:
-                exercise = new ListExercise(scanner);
-            case 3:
+                excercise = new ListExercise(scanner);
+                break;
+            default:
                 running = false;
+                break;
         }
     }
 }

@@ -1,9 +1,10 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
-import application.Exercise;
+package application;
 
-public class ListExercise extends Exercise {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class ListExercise extends Excercise {
     private int currentPhase = 0;
     private List<String> list;
     private boolean bienvenida = true;
@@ -14,9 +15,8 @@ public class ListExercise extends Exercise {
     }
 
     @Override
-    protected void exerciseLogic() {
-        System.out.println("exercise Logic");
-        switch(currentPhase) {
+    protected void excerciseLogic() {
+        switch (currentPhase) {
             case 0:
                 menuLogic();
                 break;
@@ -39,23 +39,22 @@ public class ListExercise extends Exercise {
         if (bienvenida) {
             System.out.println("Welcome to the List Exercise");
             bienvenida = false;
-        }
-        else {
+        } else {
             String fullList = "";
-
-            for (int i = 0; i < list.size(); i++){
+            for (int i = 0; i < list.size(); i++) {
                 fullList += list.get(i);
                 if (i < list.size() - 1)
                     fullList += ", ";
             }
             System.out.println("Current List: " + fullList);
         }
+
         System.out.println("Choose an option:"
-                        + "\nadd: Add element."
-                        + "\nremoveindex: Remove element by index."
-                        + "\nremoveref: Remove element by reference."
-                        + "\nclear: Clear list."
-                        + "\nmm: Exit.");
+                + "\nadd: Add element."
+                + "\nremoveindex: Remove element by index."
+                + "\nremoveref: Remove element by reference."
+                + "\nclear: Clear list."
+                + "\nmm: Exit.");
 
         String userInput = scanner.nextLine().toLowerCase();
         switch (userInput) {
@@ -89,6 +88,7 @@ public class ListExercise extends Exercise {
     private void removeByIndexLogic() {
         System.out.println("\nEnter the index of the element to remove:");
         list.remove(scanner.nextInt());
+        scanner.nextLine(); // consume leftover newline
         currentPhase = 0;
     }
 
