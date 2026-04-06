@@ -1,5 +1,6 @@
 import application.Excercise;
 import application.ListExercise;
+import application.ListImplementationExercise;
 import application.TestExcercise;
 import java.util.Scanner;
 
@@ -9,7 +10,6 @@ public class App {
     protected Scanner scanner;
 
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
         App app = new App();
         app.run();
     }
@@ -17,7 +17,7 @@ public class App {
     private void run() {
         scanner = new Scanner(System.in);
         while (running) {
-            selectExcercise(scanner);
+            displayMainMenu();
             if (running) {
                 excercise.run();
             }
@@ -25,19 +25,37 @@ public class App {
         scanner.close();
     }
 
-    private void selectExcercise(Scanner scanner) {
-        System.out.println("Select excercise or any other number to exit:");
-        int excerciseNumber = scanner.nextInt();
-        scanner.nextLine(); // consume leftover newline
-        switch (excerciseNumber) {
+    private void displayMainMenu() {
+        System.out.println("\n╔══════════════════════════════════════╗");
+        System.out.println("║          MENÚ PRINCIPAL              ║");
+        System.out.println("╠══════════════════════════════════════╣");
+        System.out.println("║ 1. Test Básico                       ║");
+        System.out.println("║ 2. Ejercicio con ArrayList           ║");
+        System.out.println("║ 3. Ejercicio con SimpleList          ║");
+        System.out.println("║ 0. Salir                             ║");
+        System.out.println("╚══════════════════════════════════════╝");
+        System.out.print("▶ Selecciona una opción: ");
+        
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        
+        switch (choice) {
             case 1:
                 excercise = new TestExcercise();
                 break;
             case 2:
                 excercise = new ListExercise(scanner);
                 break;
-            default:
+            case 3:
+                excercise = new ListImplementationExercise(scanner);
+                break;
+            case 0:
+                System.out.println("\n👋 ¡Hasta luego!");
                 running = false;
+                break;
+            default:
+                System.out.println("❌ Opción inválida. Intenta nuevamente.\n");
+                displayMainMenu();
                 break;
         }
     }
