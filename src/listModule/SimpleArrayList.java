@@ -43,7 +43,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
         }
 
-        @SuppressWarnings("unchecked")
         E element = (E) elements[index];
 
         for (int i = index; i < size - 1; i++) {
@@ -90,7 +89,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
         }
-        @SuppressWarnings("unchecked")
         E element = (E) elements[index];
         return element;
     }
@@ -100,7 +98,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
         }
-        @SuppressWarnings("unchecked")
         E oldElement = (E) elements[index];
         elements[index] = element;
         return oldElement;

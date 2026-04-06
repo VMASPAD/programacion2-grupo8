@@ -215,7 +215,6 @@ int cantidad = lista.size();  // 3
 
 ### Gestión de Genéricos
 - Ambas clases usan `Object[]` internamente y realizan casting
-- Suppresswarnings `@SuppressWarnings("unchecked")` se usa para castings seguros
 
 ### Manejo de Nulidades
 - Ambas implementaciones soportan `null` como elemento válido
