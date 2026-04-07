@@ -96,7 +96,7 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         Node<E> current = head;
         
         while (current != null) {
-            if ((current.data == null && object == null) || 
+            if (
                 (current.data != null && current.data.equals(object))) {
                 
                 if (current.prev != null) {
