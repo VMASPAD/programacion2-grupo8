@@ -21,6 +21,7 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         this.size = 0;
     }
 
+    // Recibe un elemento, crea nodo nuevo, lo enlaza al final de la cola
     @Override
     public void enqueue(E element) {
         Node<E> newNode = new Node<>(element);
@@ -34,6 +35,7 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         size++;
     }
 
+    // Verifica que no esté vacía, obtiene dato del frente, mueve front al siguiente, devuelve dato
     @Override
     public E dequeue() {
         if (isEmpty()) {

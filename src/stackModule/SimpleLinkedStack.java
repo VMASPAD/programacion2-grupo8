@@ -19,6 +19,7 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
         this.size = 0;
     }
 
+    // Recibe un elemento, crea nodo, lo coloca arriba del tope actual
     @Override
     public void push(E element) {
         Node<E> newNode = new Node<>(element);
@@ -27,6 +28,7 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
         size++;
     }
 
+    // Verifica que no esté vacía, obtiene dato del tope, mueve top al siguiente, devuelve dato
     @Override
     public E pop() {
         if (isEmpty()) {

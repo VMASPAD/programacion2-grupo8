@@ -14,6 +14,7 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         this.size = 0;
     }
 
+    // Recibe un elemento, lo coloca al final del circular (expande si es necesario)
     @Override
     public void enqueue(E element) {
         if (size == elements.length) {
@@ -24,6 +25,7 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         size++;
     }
 
+    // Verifica que no esté vacía, obtiene del frente, mueve front circularmente, devuelve elemento
     @Override
     public E dequeue() {
         if (isEmpty()) {
@@ -37,6 +39,7 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         return element;
     }
 
+    // Verifica que no esté vacía, devuelve el primer elemento sin removerlo
     @Override
     public E peek() {
         if (isEmpty()) {

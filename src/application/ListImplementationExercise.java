@@ -1,9 +1,9 @@
 package application;
 
-import listModule.SimpleList;
+import java.util.Scanner;
 import listModule.SimpleArrayList;
 import listModule.SimpleLinkedList;
-import java.util.Scanner;
+import listModule.SimpleList;
 
 public class ListImplementationExercise extends Excercise {
     private int currentPhase = 0;
@@ -48,6 +48,7 @@ public class ListImplementationExercise extends Excercise {
         }
     }
 
+    // Recibe entrada del usuario para elegir entre SimpleArrayList o SimpleLinkedList
     private void selectImplementation() {
         System.out.println("\n=== Seleccionar Implementación ===");
         System.out.println("1. SimpleArrayList (Basado en Array Dinámico)");

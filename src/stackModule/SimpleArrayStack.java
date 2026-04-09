@@ -10,6 +10,7 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         this.size = 0;
     }
 
+    // Recibe un elemento, lo coloca en el tope (expande si es necesario)
     @Override
     public void push(E element) {
         if (size == elements.length) {
@@ -19,6 +20,7 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         size++;
     }
 
+    // Verifica que no esté vacía, decrementa size, devuelve el elemento del tope
     @Override
     public E pop() {
         if (isEmpty()) {
@@ -31,6 +33,7 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         return element;
     }
 
+    // Verifica que no esté vacía, devuelve el tope sin removerlo
     @Override
     public E peek() {
         if (isEmpty()) {

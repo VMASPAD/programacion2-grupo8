@@ -39,6 +39,7 @@ public class QueueExercise extends Excercise {
         }
     }
 
+    // Recibe entrada del usuario para elegir entre SimpleArrayQueue o SimpleLinkedQueue
     private void selectImplementation() {
         System.out.println("\n=== Seleccionar Implementación de Cola ===");
         System.out.println("1. SimpleArrayQueue (Basado en Array Circular)");
@@ -64,8 +65,7 @@ public class QueueExercise extends Excercise {
                 break;
         }
     }
-
-    private void mainMenu() {
+    // Recibe entrada de usuario, muestra menú de operaciones (enqueue, dequeue, peek, clear)    private void mainMenu() {
         if (showWelcome) {
             System.out.println("\n╔════════════════════════════════════╗");
             System.out.println("║   Ejercicio de Colas - " + implementationType);

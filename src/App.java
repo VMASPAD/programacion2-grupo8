@@ -16,6 +16,7 @@ public class App {
         app.run();
     }
 
+    // Inicia el ciclo principal: muestra menú, ejecuta ejercicio seleccionado, hasta que el usuario salga
     private void run() {
         scanner = new Scanner(System.in);
         while (running) {
@@ -27,6 +28,7 @@ public class App {
         scanner.close();
     }
 
+    // Recibe entrada del usuario, muestra opciones de ejercicios, instancia el ejercicio seleccionado
     private void displayMainMenu() {
         System.out.println("\n╔══════════════════════════════════════╗");
         System.out.println("║          MENÚ PRINCIPAL              ║");

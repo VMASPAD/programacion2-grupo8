@@ -23,6 +23,7 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         this.size = 0;
     }
 
+    // Recibe un elemento, crea nodo nuevo, lo enlaza al final de la lista
     @Override
     public boolean add(E element) {
         Node<E> newNode = new Node<>(element);
@@ -66,6 +67,7 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         size++;
     }
 
+    // Recibe índice, busca desde extremo más cercano, rompe enlaces, devuelve dato removido
     @Override
     public E remove(int index) {
         if (index < 0 || index >= size) {

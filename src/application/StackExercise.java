@@ -39,6 +39,7 @@ public class StackExercise extends Excercise {
         }
     }
 
+    // Recibe entrada del usuario para elegir entre SimpleArrayStack o SimpleLinkedStack
     private void selectImplementation() {
         System.out.println("\n=== Seleccionar Implementación de Pila ===");
         System.out.println("1. SimpleArrayStack (Basado en Array Dinámico)");
@@ -64,8 +65,7 @@ public class StackExercise extends Excercise {
                 break;
         }
     }
-
-    private void mainMenu() {
+    // Recibe entrada de usuario, muestra menú de operaciones (push, pop, peek, clear)    private void mainMenu() {
         if (showWelcome) {
             System.out.println("\n╔════════════════════════════════════╗");
             System.out.println("║   Ejercicio de Pilas - " + implementationType);

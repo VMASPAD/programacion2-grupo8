@@ -10,6 +10,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.size = 0;
     }
 
+    // Recibe un elemento, lo agrega al final (expande si es necesario), devuelve true
     @Override
     public boolean add(E element) {
         if (size == elements.length) {
