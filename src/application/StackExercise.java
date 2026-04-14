@@ -1,9 +1,9 @@
 package application;
 
-import stackModule.SimpleStack;
+import java.util.Scanner;
 import stackModule.SimpleArrayStack;
 import stackModule.SimpleLinkedStack;
-import java.util.Scanner;
+import stackModule.SimpleStack;
 
 public class StackExercise extends Excercise {
     private int currentPhase = 0;
@@ -65,7 +65,8 @@ public class StackExercise extends Excercise {
                 break;
         }
     }
-    // Recibe entrada de usuario, muestra menú de operaciones (push, pop, peek, clear)    private void mainMenu() {
+    // Recibe entrada de usuario, muestra menú de operaciones (push, pop, peek, clear)   
+     private void mainMenu() {
         if (showWelcome) {
             System.out.println("\n╔════════════════════════════════════╗");
             System.out.println("║   Ejercicio de Pilas - " + implementationType);
@@ -84,8 +85,18 @@ public class StackExercise extends Excercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Selecciona una opción: ");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+
+        Boolean validChoice = false;
+        while(!validChoice) {
+            int choice;
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Tiene que ser un numero!");
+                continue;
+            }
+
+            validChoice = true;
 
         switch (choice) {
             case 1:
@@ -107,7 +118,10 @@ public class StackExercise extends Excercise {
                 System.out.println("❌ Opción inválida. Intenta nuevamente.");
                 break;
         }
+        }
+        
     }
+    
 
     private void pushElement() {
         System.out.print("\n▶ Ingresa el elemento a apilar: ");

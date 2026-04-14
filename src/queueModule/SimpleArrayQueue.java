@@ -73,7 +73,9 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
     private void expandCapacity() {
         Object[] newElements = new Object[elements.length * 2];
         for (int i = 0; i < size; i++) {
-            newElements[i] = (E) elements[(front + i) % elements.length];
+            @SuppressWarnings("unchecked")
+            E element = (E) elements[(front + i) % elements.length];
+            newElements[i] = element;
         }
         elements = newElements;
         front = 0;

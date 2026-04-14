@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class ListExercise extends Excercise {
     private int currentPhase = 0;
-    private List<String> list;
+    private final List<String> list;
     private boolean firstTime = true;
 
     public ListExercise(Scanner scnr) {

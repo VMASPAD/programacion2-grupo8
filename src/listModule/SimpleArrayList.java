@@ -44,10 +44,11 @@ public class SimpleArrayList<E> implements SimpleList<E> {
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
         }
 
+        @SuppressWarnings("unchecked")
         E element = (E) elements[index];
 
-        for (int i = index; i < size - 1; i++) {
-            elements[i] = elements[i + 1];
+        if (index != size - 1) {
+            System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         }
         elements[size - 1] = null;
         size--;
@@ -90,6 +91,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
         }
+        @SuppressWarnings("unchecked")
         E element = (E) elements[index];
         return element;
     }
@@ -99,6 +101,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
         }
+        @SuppressWarnings("unchecked")
         E oldElement = (E) elements[index];
         elements[index] = element;
         return oldElement;
@@ -116,9 +119,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 
     private void expandCapacity() {
         Object[] newElements = new Object[elements.length * 2];
-        for (int i = 0; i < size; i++) {
-            newElements[i] = elements[i];
-        }
+        System.arraycopy(elements, 0, newElements, 0, size);
         elements = newElements;
     }
 }

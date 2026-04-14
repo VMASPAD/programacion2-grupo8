@@ -64,9 +64,7 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
 
     private void expandCapacity() {
         Object[] newElements = new Object[elements.length * 2];
-        for (int i = 0; i < size; i++) {
-            newElements[i] = elements[i];
-        }
+        System.arraycopy(elements, 0, newElements, 0, size);
         elements = newElements;
     }
 }

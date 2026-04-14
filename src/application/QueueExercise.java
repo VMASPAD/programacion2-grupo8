@@ -1,9 +1,9 @@
 package application;
 
-import queueModule.SimpleQueue;
+import java.util.Scanner;
 import queueModule.SimpleArrayQueue;
 import queueModule.SimpleLinkedQueue;
-import java.util.Scanner;
+import queueModule.SimpleQueue;
 
 public class QueueExercise extends Excercise {
     private int currentPhase = 0;
@@ -65,7 +65,8 @@ public class QueueExercise extends Excercise {
                 break;
         }
     }
-    // Recibe entrada de usuario, muestra menú de operaciones (enqueue, dequeue, peek, clear)    private void mainMenu() {
+    // Recibe entrada de usuario, muestra menú de operaciones (enqueue, dequeue, peek, clear)   
+ private void mainMenu() {
         if (showWelcome) {
             System.out.println("\n╔════════════════════════════════════╗");
             System.out.println("║   Ejercicio de Colas - " + implementationType);
@@ -84,8 +85,17 @@ public class QueueExercise extends Excercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Selecciona una opción: ");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        Boolean validChoice = false;
+        int choice;
+        while(!validChoice) {
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Tiene que ser un numero!");
+                continue;
+            }
+
+            validChoice = true;
 
         switch (choice) {
             case 1:
@@ -106,6 +116,7 @@ public class QueueExercise extends Excercise {
             default:
                 System.out.println("❌ Opción inválida. Intenta nuevamente.");
                 break;
+        }
         }
     }
 
