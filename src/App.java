@@ -1,3 +1,4 @@
+import application.ConsumerApplicationExercise;
 import application.Excercise;
 import application.ListExercise;
 import application.ListImplementationExercise;
@@ -40,6 +41,7 @@ public class App {
         System.out.println("║ 4. Ejercicio con SimpleStack         ║");
         System.out.println("║ 5. Ejercicio con SimpleQueue         ║");
         System.out.println("║ 6. Ejercicio con SimpleSet           ║");
+        System.out.println("║ 7. TP6: Aplicación Atención Consumidor║");
         System.out.println("║ 0. Salir                             ║");
         System.out.println("╚══════════════════════════════════════╝");
         System.out.print("▶ Selecciona una opción: ");
@@ -66,8 +68,11 @@ public class App {
             case 6:
                 excercise = new SetExercise(scanner);
                 break;
+            case 7:
+                excercise = new ConsumerApplicationExercise(scanner);
+                break;
             case 0:
-                System.out.println("\n👋 ¡Hasta luego!");
+                System.out.println("\n¡Programa Terminado!");
                 running = false;
                 break;
             default:
