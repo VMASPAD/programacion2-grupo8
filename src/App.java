@@ -1,5 +1,6 @@
 import application.ConsumerApplicationExercise;
 import application.Excercise;
+import application.InventoryExercise;
 import application.ListExercise;
 import application.ListImplementationExercise;
 import application.QueueExercise;
@@ -42,6 +43,7 @@ public class App {
         System.out.println("║ 5. Ejercicio con SimpleQueue         ║");
         System.out.println("║ 6. Ejercicio con SimpleSet           ║");
         System.out.println("║ 7. TP6: Aplicación Atención Consumidor║");
+        System.out.println("║ 8. TP7: Sistema de Inventario        ║");
         System.out.println("║ 0. Salir                             ║");
         System.out.println("╚══════════════════════════════════════╝");
         System.out.print("▶ Selecciona una opción: ");
@@ -70,6 +72,9 @@ public class App {
                 break;
             case 7:
                 excercise = new ConsumerApplicationExercise(scanner);
+                break;
+            case 8:
+                excercise = new InventoryExercise(scanner);
                 break;
             case 0:
                 System.out.println("\n¡Programa Terminado!");
