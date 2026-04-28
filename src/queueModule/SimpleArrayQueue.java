@@ -1,9 +1,17 @@
 package queueModule;
 
+/**
+ * Implementación de cola circular usando un array dinámico.
+ * Funciona según el principio FIFO (Primero en Entrar, Primero en Salir).
+ * Los elementos se insertan al final (rear) y se extraen del inicio (front).
+ * Utiliza índices circulares (front y rear) para reutilizar espacio sin desplazar elementos.
+ * Cuando el array se llena, se reorganizan los elementos y se expande la capacidad.
+ * @param <E> tipo genérico de elementos que almacena la cola
+ */
 public class SimpleArrayQueue<E> implements SimpleQueue<E> {
     private Object[] elements;
-    private int front;
-    private int rear;
+    private int front;  // Índice del primer elemento
+    private int rear;   // Índice del último elemento
     private int size;
     private static final int INITIAL_CAPACITY = 10;
 
@@ -14,7 +22,11 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         this.size = 0;
     }
 
-    // Recibe un elemento, lo coloca al final del circular (expande si es necesario)
+    /**
+     * Agrega un elemento al final (parte trasera) de la cola.
+     * Utiliza índice circular para reutilizar espacio.
+     * Si la cola está llena, expande su capacidad y reorganiza los elementos.
+     */
     @Override
     public void enqueue(E element) {
         if (size == elements.length) {
@@ -25,7 +37,11 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         size++;
     }
 
-    // Verifica que no esté vacía, obtiene del frente, mueve front circularmente, devuelve elemento
+    /**
+     * Extrae y devuelve el elemento del frente (inicio) de la cola.
+     * Utiliza índice circular para avanzar sin desplazar elementos.
+     * Lanza excepción si la cola está vacía.
+     */
     @Override
     public E dequeue() {
         if (isEmpty()) {
@@ -39,7 +55,10 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         return element;
     }
 
-    // Verifica que no esté vacía, devuelve el primer elemento sin removerlo
+    /**
+     * Retorna el elemento del frente sin removerlo de la cola.
+     * Lanza excepción si la cola está vacía.
+     */
     @Override
     public E peek() {
         if (isEmpty()) {
@@ -50,6 +69,9 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         return element;
     }
 
+    /**
+     * Elimina todos los elementos de la cola.
+     */
     @Override
     public void clear() {
         for (int i = 0; i < elements.length; i++) {
@@ -70,6 +92,11 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         return size == 0;
     }
 
+    /**
+     * Crea un nuevo array con el doble de capacidad.
+     * Reorganiza los elementos eliminando espacios vacíos en el medio.
+     * Reinicia los índices front y rear en posiciones lineales.
+     */
     private void expandCapacity() {
         Object[] newElements = new Object[elements.length * 2];
         for (int i = 0; i < size; i++) {

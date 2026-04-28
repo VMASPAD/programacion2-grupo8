@@ -1,9 +1,9 @@
 package application;
 
-import setModule.SimpleSet;
+import java.util.Scanner;
 import setModule.SimpleArraySet;
 import setModule.SimpleLinkedSet;
-import java.util.Scanner;
+import setModule.SimpleSet;
 
 public class SetExercise extends Exercise {
     private int currentPhase = 0;
@@ -299,7 +299,7 @@ public class SetExercise extends Exercise {
         if (set.isEmpty()) {
             return "[Vacío]";
         }
-        String[] elements = set.toArray();
+        Object[] elements = set.toArray();  // toArray devuelve Object[], no String[]
         StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < elements.length; i++) {
             sb.append("\"").append(elements[i]).append("\"");

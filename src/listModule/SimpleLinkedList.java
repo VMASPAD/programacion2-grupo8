@@ -1,10 +1,23 @@
 package listModule;
 
+/**
+ * Implementación de lista usando nodos doblemente enlazados.
+ * Cada nodo contiene datos y referencias al nodo anterior (prev) y siguiente (next).
+ * El acceso a elementos requiere recorrer desde cabecera o cola.
+ * Ventajas: inserciones y eliminaciones son eficientes si se tiene referencia al nodo (O(1))
+ * Desventajas: acceso a elemento por índice requiere recorrido (O(n))
+ * Nota: optimización - busca desde extremo más cercano al índice
+ * @param <E> tipo genérico de elementos que almacena la lista
+ */
 public class SimpleLinkedList<E> implements SimpleList<E> {
     private Node<E> head;
     private Node<E> tail;
     private int size;
 
+    /**
+     * Clase interna que representa un nodo en la lista doblemente enlazada.
+     * Almacena el dato, referencia al nodo anterior y siguiente.
+     */
     private static class Node<E> {
         E data;
         Node<E> prev;
@@ -23,7 +36,10 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         this.size = 0;
     }
 
-    // Recibe un elemento, crea nodo nuevo, lo enlaza al final de la lista
+    /**
+     * Agrega un elemento al final de la lista.
+     * Crea un nuevo nodo y lo enlaza como nuevo tail.
+     */
     @Override
     public boolean add(E element) {
         Node<E> newNode = new Node<>(element);
@@ -40,6 +56,10 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         return true;
     }
 
+    /**
+     * Inserta un elemento en una posición específica.
+     * Encuentra el nodo en esa posición y lo reenlaza.
+     */
     @Override
     public void add(int index, E element) {
         if (index < 0 || index > size) {
@@ -67,7 +87,11 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         size++;
     }
 
-    // Recibe índice, busca desde extremo más cercano, rompe enlaces, devuelve dato removido
+    /**
+     * Elimina y devuelve el elemento en la posición indicada.
+     * Rompe los enlaces del nodo para sacarlo de la cadena.
+     * Optimización: busca desde extremo más cercano.
+     */
     @Override
     public E remove(int index) {
         if (index < 0 || index >= size) {
@@ -93,6 +117,10 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         return data;
     }
 
+    /**
+     * Busca la primera ocurrencia del objeto y la elimina.
+     * Recorre la lista desde la cabecera.
+     */
     @Override
     public boolean remove(Object object) {
         Node<E> current = head;
@@ -121,6 +149,10 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         return false;
     }
 
+    /**
+     * Limpia la lista eliminando todas las referencias a nodos.
+     * La memoria de los nodos se libera automáticamente.
+     */
     @Override
     public void clear() {
         head = null;
@@ -128,6 +160,10 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         size = 0;
     }
 
+    /**
+     * Verifica si el elemento está presente en la lista.
+     * Recorre hasta encontrar o llegar al final.
+     */
     @Override
     public boolean contains(Object object) {
         Node<E> current = head;
@@ -142,6 +178,10 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         return false;
     }
 
+    /**
+     * Obtiene el elemento en la posición indicada.
+     * Usa getNode optimizado que busca desde extremo más cercano.
+     */
     @Override
     public E get(int index) {
         if (index < 0 || index >= size) {
@@ -150,6 +190,9 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         return getNode(index).data;
     }
 
+    /**
+     * Reemplaza el elemento en una posición con uno nuevo.
+     */
     @Override
     public E set(int index, E element) {
         if (index < 0 || index >= size) {
@@ -172,6 +215,12 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         return size == 0;
     }
 
+    /**
+     * Encuentra el nodo en la posición indicada optimizando la búsqueda.
+     * Si el índice está en la primera mitad, busca desde cabecera (head).
+     * Si está en la segunda mitad, busca desde cola (tail).
+     * Esto reduce el tiempo de búsqueda a la mitad en promedio.
+     */
     private Node<E> getNode(int index) {
         if (index < size / 2) {
             Node<E> current = head;

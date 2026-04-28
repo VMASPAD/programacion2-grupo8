@@ -1,5 +1,12 @@
 package stackModule;
 
+/**
+ * Implementación de pila usando un array dinámico.
+ * Funciona según el principio LIFO (Último en Entrar, Primero en Salir).
+ * Los elementos se insertan y extraen siempre del tope (final del array).
+ * El array se expande automáticamente cuando se llena.
+ * @param <E> tipo genérico de elementos que almacena la pila
+ */
 public class SimpleArrayStack<E> implements SimpleStack<E> {
     private Object[] elements;
     private int size;
@@ -10,7 +17,10 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         this.size = 0;
     }
 
-    // Recibe un elemento, lo coloca en el tope (expande si es necesario)
+    /**
+     * Agrega un elemento al tope de la pila.
+     * Si el array está lleno, expande su capacidad automáticamente.
+     */
     @Override
     public void push(E element) {
         if (size == elements.length) {
@@ -20,7 +30,10 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         size++;
     }
 
-    // Verifica que no esté vacía, decrementa size, devuelve el elemento del tope
+    /**
+     * Extrae y devuelve el elemento del tope de la pila.
+     * Lanza excepción si la pila está vacía.
+     */
     @Override
     public E pop() {
         if (isEmpty()) {
@@ -33,7 +46,10 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         return element;
     }
 
-    // Verifica que no esté vacía, devuelve el tope sin removerlo
+    /**
+     * Retorna el elemento del tope sin removerlo de la pila.
+     * Lanza excepción si la pila está vacía.
+     */
     @Override
     public E peek() {
         if (isEmpty()) {
@@ -44,6 +60,9 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         return element;
     }
 
+    /**
+     * Elimina todos los elementos de la pila.
+     */
     @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
@@ -62,6 +81,9 @@ public class SimpleArrayStack<E> implements SimpleStack<E> {
         return size == 0;
     }
 
+    /**
+     * Crea un nuevo array con el doble de capacidad y copia los elementos.
+     */
     private void expandCapacity() {
         Object[] newElements = new Object[elements.length * 2];
         System.arraycopy(elements, 0, newElements, 0, size);
