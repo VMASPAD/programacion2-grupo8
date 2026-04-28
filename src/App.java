@@ -31,6 +31,17 @@ public class App {
         scanner.close();
     }
 
+    private int readSafeInteger() {
+        while (true) {
+            try {
+                return scanner.nextInt();
+            } catch (java.util.InputMismatchException e) {
+                scanner.nextLine();
+                System.out.print("Entrada inválida. Ingresa un número: ");
+            }
+        }
+    }
+
     // Recibe entrada del usuario, muestra opciones de ejercicios, instancia el ejercicio seleccionado
     private void displayMainMenu() {
         System.out.println("\n╔══════════════════════════════════════╗");
@@ -48,7 +59,7 @@ public class App {
         System.out.println("╚══════════════════════════════════════╝");
         System.out.print("▶ Selecciona una opción: ");
         
-        int choice = scanner.nextInt();
+        int choice = readSafeInteger();
         scanner.nextLine();
         
         switch (choice) {

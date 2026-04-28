@@ -8,10 +8,10 @@ package applicationModule.consumerApp.model;
  * LOW: baja prioridad (peso 4)
  */
 public enum UrgencyLevel {
-    CRITICAL(1, "🔴 CRÍTICO"),
-    HIGH(2, "🟠 ALTO"),
-    MEDIUM(3, "🟡 MEDIO"),
-    LOW(4, "🟢 BAJO");
+    CRITICAL(1, "CRÍTICO"),
+    HIGH(2, "ALTO"),
+    MEDIUM(3, "MEDIO"),
+    LOW(4, "BAJO");
 
     private final int weight;
     private final String label;

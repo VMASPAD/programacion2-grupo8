@@ -46,7 +46,7 @@ public class StackExercise extends Exercise {
         System.out.println("2. SimpleLinkedStack (Basado en Nodos Enlazados)");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -156,7 +156,7 @@ public class StackExercise extends Exercise {
 
         try {
             String top = stack.peek();
-            System.out.println("\n📌 Tope de la pila: \"" + top + "\"");
+            System.out.println("\nTope de la pila: \"" + top + "\"");
         } catch (IllegalStateException e) {
             System.out.println("\n❌ " + e.getMessage());
         }

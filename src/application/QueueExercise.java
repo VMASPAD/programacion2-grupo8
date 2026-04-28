@@ -46,7 +46,7 @@ public class QueueExercise extends Exercise {
         System.out.println("2. SimpleLinkedQueue (Basado en Nodos Enlazados)");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -153,7 +153,7 @@ public class QueueExercise extends Exercise {
 
         try {
             String front = queue.peek();
-            System.out.println("\n👀 Primero de la cola: \"" + front + "\"");
+            System.out.println("\nPrimero de la cola: \"" + front + "\"");
         } catch (IllegalStateException e) {
             System.out.println("\n❌ " + e.getMessage());
         }

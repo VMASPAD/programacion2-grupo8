@@ -55,7 +55,7 @@ public class ListImplementationExercise extends Exercise {
         System.out.println("2. SimpleLinkedList (Basado en Nodos Enlazados)");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -97,7 +97,7 @@ public class ListImplementationExercise extends Exercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Selecciona una opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {

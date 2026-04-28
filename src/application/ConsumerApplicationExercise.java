@@ -126,16 +126,12 @@ public class ConsumerApplicationExercise extends Exercise {
      */
     private void viewComplaint() {
         if (complaintQueue.isEmpty()) {
-            System.out.println("\n" + BORDER);
-            System.out.println("║   VISUALIZAR RECLAMO                           ║");
-            System.out.println(FOOTER);
-            System.out.println("\n✅ ¡Excelente! No hay reclamos pendientes en la cola.");
+            System.out.println("\n" + BORDER + "VISUALIZAR RECLAMO" + FOOTER);
+            System.out.println("\n✅ Excelente. No hay reclamos pendientes en la cola.");
             return;
         }
 
-        System.out.println("\n" + BORDER);
-        System.out.println("║   PRÓXIMO RECLAMO A ATENDER                   ║");
-        System.out.println(FOOTER);
+        System.out.println("\n" + BORDER + "PRÓXIMO RECLAMO A ATENDER" + FOOTER);
 
         Complaint next = null;
         try {
@@ -173,15 +169,13 @@ public class ConsumerApplicationExercise extends Exercise {
      * Muestra estadísticas de la cola de reclamos.
      */
     private void displayStatistics() {
-        System.out.println("\n" + BORDER);
-        System.out.println("║   ESTADÍSTICAS DE LA COLA                      ║");
-        System.out.println(FOOTER);
+        System.out.println("\n" + BORDER + "ESTADÍSTICAS DE LA COLA" + FOOTER);
 
         if (complaintQueue.isEmpty()) {
             System.out.println("✅ No hay reclamos en el sistema actualmente.");
         } else {
-            System.out.println("📊 Total de reclamos en cola: " + complaintQueue.size());
-            System.out.println("⚠️  Prioridad más alta (inmediata): " +
+            System.out.println("Total de reclamos en cola: " + complaintQueue.size());
+            System.out.println("Prioridad más alta (inmediata): " +
                     UrgencyLevel.fromIndex(complaintQueue.getHighestPriority()).getLabel());
         }
     }
@@ -200,6 +194,9 @@ public class ConsumerApplicationExercise extends Exercise {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 System.out.print("Por favor, ingrese un número válido: ");
+            } catch (Exception e) {
+                running = false;
+                return -1;
             }
         }
     }

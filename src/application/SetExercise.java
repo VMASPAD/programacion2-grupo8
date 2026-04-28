@@ -53,7 +53,7 @@ public class SetExercise extends Exercise {
         System.out.println("2. SimpleLinkedSet (Basado en Nodos Enlazados)");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -94,7 +94,7 @@ public class SetExercise extends Exercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Selecciona una opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -127,7 +127,7 @@ public class SetExercise extends Exercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -163,7 +163,7 @@ public class SetExercise extends Exercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -218,7 +218,7 @@ public class SetExercise extends Exercise {
 
         SimpleSet<String> union = setA.unionWith(setB);
 
-        System.out.println("\n📋 Resultado:");
+        System.out.println("\nResultado:");
         System.out.println("   Tamaño: " + union.size());
         System.out.println("   Elementos: " + formatSetElements(union));
         System.out.println();
@@ -233,7 +233,7 @@ public class SetExercise extends Exercise {
 
         SimpleSet<String> intersection = setA.intersectWith(setB);
 
-        System.out.println("\n📋 Resultado:");
+        System.out.println("\nResultado:");
         System.out.println("   Tamaño: " + intersection.size());
         System.out.println("   Elementos: " + formatSetElements(intersection));
         System.out.println();
@@ -249,7 +249,7 @@ public class SetExercise extends Exercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("Opción: ");
 
-        int choice = scanner.nextInt();
+        int choice = readSafeInt();
         scanner.nextLine();
 
         switch (choice) {
@@ -277,22 +277,20 @@ public class SetExercise extends Exercise {
 
         SimpleSet<String> difference = set1.differenceWith(set2);
 
-        System.out.println("\n📋 Resultado:");
+        System.out.println("\nResultado:");
         System.out.println("   Tamaño: " + difference.size());
         System.out.println("   Elementos: " + formatSetElements(difference));
         System.out.println();
     }
 
     private void displaySetsStatus() {
-        System.out.println("\n📋 Estado de los Sets:");
-        System.out.println("   ┌─ Set A ─────────────────────────┐");
-        System.out.println("   │ Tamaño: " + setA.size() + " | Vacío: " + (setA.isEmpty() ? "Sí" : "No"));
-        System.out.println("   │ Elementos: " + formatSetElements(setA));
-        System.out.println("   ├─────────────────────────────────┤");
-        System.out.println("   │ Set B");
-        System.out.println("   │ Tamaño: " + setB.size() + " | Vacío: " + (setB.isEmpty() ? "Sí" : "No"));
-        System.out.println("   │ Elementos: " + formatSetElements(setB));
-        System.out.println("   └─────────────────────────────────┘");
+        System.out.println("\nEstado de los Sets:");
+        System.out.println("Set A");
+        System.out.println("Tamaño: " + setA.size() + " | Vacío: " + (setA.isEmpty() ? "Sí" : "No"));
+        System.out.println("Elementos: " + formatSetElements(setA));
+        System.out.println("\nSet B");
+        System.out.println("Tamaño: " + setB.size() + " | Vacío: " + (setB.isEmpty() ? "Sí" : "No"));
+        System.out.println("Elementos: " + formatSetElements(setB));
     }
 
     private String formatSetElements(SimpleSet<String> set) {

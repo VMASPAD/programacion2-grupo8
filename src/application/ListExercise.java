@@ -54,11 +54,10 @@ public class ListExercise extends Exercise {
         System.out.println("└────────────────────────────────────┘");
         System.out.print("▶ Selecciona una opción: ");
 
-        try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+        int choice = readSafeInt();
+        scanner.nextLine();
 
-            switch (choice) {
+        switch (choice) {
                 case 1:
                     currentPhase = 1;
                     break;
@@ -78,10 +77,6 @@ public class ListExercise extends Exercise {
                     System.out.println("❌ Opción inválida. Intenta nuevamente.");
                     break;
             }
-        } catch (Exception e) {
-            scanner.nextLine();
-            System.out.println("❌ Entrada inválida.");
-        }
     }
 
     private void addElement() {
@@ -100,18 +95,14 @@ public class ListExercise extends Exercise {
 
         showListStatus();
         System.out.print("\n▶ Ingresa el índice a remover: ");
-        try {
-            int index = scanner.nextInt();
-            scanner.nextLine();
-            if (index >= 0 && index < list.size()) {
-                String removed = list.remove(index);
-                System.out.println("✓ Elemento removido: \"" + removed + "\"");
-            } else {
-                System.out.println("❌ Índice fuera de rango.");
-            }
-        } catch (Exception e) {
-            scanner.nextLine();
-            System.out.println("❌ Entrada inválida.");
+
+        int index = readSafeInt();
+        scanner.nextLine();
+        if (index >= 0 && index < list.size()) {
+            String removed = list.remove(index);
+            System.out.println("✓ Elemento removido: \"" + removed + "\"");
+        } else {
+            System.out.println("❌ Índice fuera de rango.");
         }
         currentPhase = 0;
     }
@@ -152,7 +143,7 @@ public class ListExercise extends Exercise {
     }
 
     private void showListStatus() {
-        System.out.println("\n📋 Estado de la lista (Tamaño: " + list.size() + ")");
+        System.out.println("\n📋 Estado de la lista (Tamaño: " + list.size() + ")");;
         if (list.isEmpty()) {
             System.out.println("   [Lista vacía]");
         } else {

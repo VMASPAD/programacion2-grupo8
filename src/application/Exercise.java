@@ -19,5 +19,16 @@ public abstract class Exercise {
         }
     }
 
+    protected int readSafeInt() {
+        while (true) {
+            try {
+                return scanner.nextInt();
+            } catch (java.util.InputMismatchException e) {
+                scanner.nextLine();
+                System.out.print("Entrada inválida. Ingresa un número: ");
+            }
+        }
+    }
+
     protected abstract void exerciseLogic();
 }

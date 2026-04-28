@@ -61,11 +61,10 @@ public class InventoryExercise extends Exercise {
         System.out.println("└──────────────────────┘");
         System.out.print("▶ Selecciona una opción: ");
 
-        try {
-            int option = scanner.nextInt();
-            scanner.nextLine();
+        int option = readSafeInt();
+        scanner.nextLine();
 
-            switch (option) {
+        switch (option) {
                 case 1:
                     searchProduct();
                     break;
@@ -87,10 +86,6 @@ public class InventoryExercise extends Exercise {
                     break;
                 default:
                     System.out.println("❌ Opción inválida. Intenta nuevamente.");
-            }
-        } catch (Exception e) {
-            System.out.println("❌ Error: Entrada inválida. Por favor, ingresa un número.");
-            scanner.nextLine();
         }
     }
 
@@ -216,11 +211,10 @@ public class InventoryExercise extends Exercise {
                 System.out.println("0. Cancelar");
                 System.out.print("Opción: ");
 
-                try {
-                    int option = scanner.nextInt();
-                    scanner.nextLine();
+                int option = readSafeInt();
+                scanner.nextLine();
 
-                    switch (option) {
+                switch (option) {
                         case 1:
                             System.out.print("Nuevo nombre: ");
                             String newName = scanner.nextLine().trim();
@@ -247,10 +241,6 @@ public class InventoryExercise extends Exercise {
                         default:
                             System.out.println("❌ Opción inválida.");
                     }
-                } catch (Exception e) {
-                    System.out.println("❌ Error: Entrada inválida.");
-                    scanner.nextLine();
-                }
                 return;
             }
         }
