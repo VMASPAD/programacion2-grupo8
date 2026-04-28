@@ -1,22 +1,26 @@
 package application;
 
+import dictionaryModule.SimpleDictionary;
+import dictionaryModule.SimpleEntry;
+import dictionaryModule.SimpleLinkedDictionary;
 import inventoryModule.model.Product;
 import java.util.Scanner;
-import listModule.SimpleLinkedList;
-import listModule.SimpleList;
 
 /**
  * Sistema de gestión de inventario de comercio.
  * Permite buscar, agregar, eliminar, editar y listar productos en el inventario.
+ * 
+ * Implementa el TDA Dictionary para almacenar productos con sus códigos como claves.
+ * Ofrece operaciones de búsqueda O(n), inserción, eliminación y edición de productos.
  */
 public class InventoryExercise extends Exercise {
-    private SimpleList<Product> inventory;
+    private SimpleDictionary<String, Product> inventory;
     private int currentPhase = 0;
     private boolean showWelcome = true;
 
     public InventoryExercise(Scanner scanner) {
         super(scanner);
-        this.inventory = new SimpleLinkedList<>();
+        this.inventory = new SimpleLinkedDictionary<>();
         initializeSampleData();
     }
 
@@ -24,9 +28,13 @@ public class InventoryExercise extends Exercise {
      * Inicializa el inventario con algunos productos de ejemplo para facilitar las pruebas.
      */
     private void initializeSampleData() {
-        inventory.add(new Product("P001", "Notebook", 1200.00, 5));
-        inventory.add(new Product("P002", "Mouse", 25.50, 50));
-        inventory.add(new Product("P003", "Teclado", 85.00, 30));
+        Product p1 = new Product("P001", "Notebook", 1200.00, 5);
+        Product p2 = new Product("P002", "Mouse", 25.50, 50);
+        Product p3 = new Product("P003", "Teclado", 85.00, 30);
+        
+        inventory.put(p1.getCode(), p1);
+        inventory.put(p2.getCode(), p2);
+        inventory.put(p3.getCode(), p3);
     }
 
     @Override
@@ -91,6 +99,7 @@ public class InventoryExercise extends Exercise {
 
     /**
      * Busca un producto por su código y lo muestra si existe.
+     * Utiliza la búsqueda eficiente del diccionario.
      */
     private void searchProduct() {
         System.out.print("\n🔍 Ingresa el código del producto: ");
@@ -101,21 +110,19 @@ public class InventoryExercise extends Exercise {
             return;
         }
 
-        for (int i = 0; i < inventory.size(); i++) {
-            Product p = inventory.get(i);
-            if (p.getCode().equalsIgnoreCase(code)) {
-                System.out.println("\n✓ Producto encontrado:");
-                System.out.println("   " + p);
-                return;
-            }
+        Product product = inventory.get(code);
+        if (product != null) {
+            System.out.println("\n✓ Producto encontrado:");
+            System.out.println("   " + product);
+        } else {
+            System.out.println("❌ Producto no encontrado.");
         }
-
-        System.out.println("❌ Producto no encontrado.");
     }
 
     /**
      * Agrega un nuevo producto al inventario.
      * Valida que el código sea único y que los datos sean válidos.
+     * Utiliza el diccionario para verificar si el código ya existe.
      */
     private void addProduct() {
         System.out.println("\n--- Agregar Nuevo Producto ---");
@@ -128,12 +135,10 @@ public class InventoryExercise extends Exercise {
             return;
         }
 
-        // Verificar que el código sea único
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getCode().equalsIgnoreCase(code)) {
-                System.out.println("❌ Ya existe un producto con ese código.");
-                return;
-            }
+        // Verificar que el código sea único usando containsKey
+        if (inventory.containsKey(code)) {
+            System.out.println("❌ Ya existe un producto con ese código.");
+            return;
         }
 
         System.out.print("Nombre del producto: ");
@@ -157,7 +162,7 @@ public class InventoryExercise extends Exercise {
 
         try {
             Product newProduct = new Product(code, name, price, quantity);
-            inventory.add(newProduct);
+            inventory.put(code, newProduct);
             System.out.println("✓ Producto agregado exitosamente.");
         } catch (Exception e) {
             System.out.println("❌ Error al agregar el producto: " + e.getMessage());
@@ -166,6 +171,7 @@ public class InventoryExercise extends Exercise {
 
     /**
      * Elimina un producto del inventario por su código.
+     * Utiliza el método remove() del diccionario para eliminar eficientemente.
      */
     private void deleteProduct() {
         System.out.print("\n🗑️  Ingresa el código del producto a borrar: ");
@@ -176,20 +182,17 @@ public class InventoryExercise extends Exercise {
             return;
         }
 
-        for (int i = 0; i < inventory.size(); i++) {
-            Product p = inventory.get(i);
-            if (p.getCode().equalsIgnoreCase(code)) {
-                inventory.remove(i);
-                System.out.println("✓ Producto borrado exitosamente.");
-                return;
-            }
+        Product removedProduct = inventory.remove(code);
+        if (removedProduct != null) {
+            System.out.println("✓ Producto borrado exitosamente.");
+        } else {
+            System.out.println("❌ Producto no encontrado.");
         }
-
-        System.out.println("❌ Producto no encontrado.");
     }
 
     /**
      * Edita un producto existente permitiendo cambiar nombre, precio o cantidad.
+     * Accede al producto usando la búsqueda eficiente del diccionario.
      */
     private void editProduct() {
         System.out.print("\n✏️  Ingresa el código del producto a editar: ");
@@ -200,57 +203,56 @@ public class InventoryExercise extends Exercise {
             return;
         }
 
-        for (int i = 0; i < inventory.size(); i++) {
-            Product p = inventory.get(i);
-            if (p.getCode().equalsIgnoreCase(code)) {
-                System.out.println("\nProducto actual: " + p);
-                System.out.println("\n¿Qué deseas editar?");
-                System.out.println("1. Nombre");
-                System.out.println("2. Precio");
-                System.out.println("3. Cantidad");
-                System.out.println("0. Cancelar");
-                System.out.print("Opción: ");
-
-                int option = readSafeInt();
-                scanner.nextLine();
-
-                switch (option) {
-                        case 1:
-                            System.out.print("Nuevo nombre: ");
-                            String newName = scanner.nextLine().trim();
-                            if (!newName.isEmpty()) {
-                                p.setName(newName);
-                                System.out.println("✓ Nombre actualizado.");
-                            } else {
-                                System.out.println("❌ El nombre no puede estar vacío.");
-                            }
-                            break;
-                        case 2:
-                            double newPrice = readDouble("Nuevo precio ($): ");
-                            p.setPrice(newPrice);
-                            System.out.println("✓ Precio actualizado.");
-                            break;
-                        case 3:
-                            int newQuantity = readInt("Nueva cantidad: ");
-                            p.setQuantity(newQuantity);
-                            System.out.println("✓ Cantidad actualizada.");
-                            break;
-                        case 0:
-                            System.out.println("Edición cancelada.");
-                            break;
-                        default:
-                            System.out.println("❌ Opción inválida.");
-                    }
-                return;
-            }
+        Product product = inventory.get(code);
+        if (product == null) {
+            System.out.println("❌ Producto no encontrado.");
+            return;
         }
 
-        System.out.println("❌ Producto no encontrado.");
+        System.out.println("\nProducto actual: " + product);
+        System.out.println("\n¿Qué deseas editar?");
+        System.out.println("1. Nombre");
+        System.out.println("2. Precio");
+        System.out.println("3. Cantidad");
+        System.out.println("0. Cancelar");
+        System.out.print("Opción: ");
+
+        int option = readSafeInt();
+        scanner.nextLine();
+
+        switch (option) {
+                case 1:
+                    System.out.print("Nuevo nombre: ");
+                    String newName = scanner.nextLine().trim();
+                    if (!newName.isEmpty()) {
+                        product.setName(newName);
+                        System.out.println("✓ Nombre actualizado.");
+                    } else {
+                        System.out.println("❌ El nombre no puede estar vacío.");
+                    }
+                    break;
+                case 2:
+                    double newPrice = readDouble("Nuevo precio ($): ");
+                    product.setPrice(newPrice);
+                    System.out.println("✓ Precio actualizado.");
+                    break;
+                case 3:
+                    int newQuantity = readInt("Nueva cantidad: ");
+                    product.setQuantity(newQuantity);
+                    System.out.println("✓ Cantidad actualizada.");
+                    break;
+                case 0:
+                    System.out.println("Edición cancelada.");
+                    break;
+                default:
+                    System.out.println("❌ Opción inválida.");
+                }
     }
 
     /**
      * Muestra un listado de todos los productos en el inventario.
      * Incluye el valor total del inventario.
+     * Utiliza el método entries() del diccionario para obtener todos los productos.
      */
     private void listProducts() {
         if (inventory.isEmpty()) {
@@ -260,11 +262,14 @@ public class InventoryExercise extends Exercise {
 
         System.out.println("\n╔════ LISTADO DE PRODUCTOS ════╗");
         double totalInventoryValue = 0;
+        SimpleEntry<String, Product>[] entries = inventory.entries();
+        int index = 1;
 
-        for (int i = 0; i < inventory.size(); i++) {
-            Product p = inventory.get(i);
-            System.out.println((i + 1) + ". " + p);
+        for (SimpleEntry<String, Product> entry : entries) {
+            Product p = entry.getValue();
+            System.out.println(index + ". " + p);
             totalInventoryValue += p.getTotalValue();
+            index++;
         }
 
         System.out.println("╠══════════════════════════════╣");
