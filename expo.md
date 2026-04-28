@@ -252,22 +252,3 @@ private Node<E> getNode(int index) {
 }
 ```
 
----
-
-## Conclusiones
-
-Este proyecto implementa las abstracciones fundamentales de estructuras de datos, demostrando:
-
-1. **Polimorfismo**: Una interfaz, múltiples implementaciones
-2. **Trade-offs de Diseño**: Cada estructura optimiza diferentes operaciones
-3. **Complejidad Algorítmica**: O(1) vs O(n) tiene impacto real en el rendimiento
-4. **Genericidad en Java**: Uso seguro de tipos genéricos
-5. **Buen Diseño**: Interfaz clara y consistente independiente de la implementación
-
-La elección entre implementaciones depende del caso de uso específico: no existe una solución única para todos los problemas.
-
----
-
-**Elaborado por**: Estudiante de Programación 2  
-**Fecha**: 2025  
-**Objetivo**: Entender estructuras de datos fundamentales y su implementación
