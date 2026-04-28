@@ -5,7 +5,7 @@ import stackModule.SimpleArrayStack;
 import stackModule.SimpleLinkedStack;
 import stackModule.SimpleStack;
 
-public class StackExercise extends Excercise {
+public class StackExercise extends Exercise {
     private int currentPhase = 0;
     private SimpleStack<String> stack;
     private String implementationType;
@@ -16,7 +16,7 @@ public class StackExercise extends Excercise {
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         switch (currentPhase) {
             case 0:
                 selectImplementation();

@@ -1,13 +1,13 @@
 package application;
 
-public class TestExcercise extends Excercise {
+public class TestExercise extends Exercise {
 
-    public TestExcercise() {
+    public TestExercise() {
         super();
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         System.out.println("\n╔════════════════════════════════════╗");
         System.out.println("║       Test Básico Completado       ║");
         System.out.println("╚════════════════════════════════════╝\n");

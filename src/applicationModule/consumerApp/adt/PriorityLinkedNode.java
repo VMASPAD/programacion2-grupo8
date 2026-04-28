@@ -1,4 +1,4 @@
-package applicationModule.consumerApp.tda;
+package applicationModule.consumerApp.adt;
 
 public class PriorityLinkedNode<E> {
     E value;

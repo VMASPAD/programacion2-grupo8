@@ -5,7 +5,7 @@ import setModule.SimpleArraySet;
 import setModule.SimpleLinkedSet;
 import java.util.Scanner;
 
-public class SetExercise extends Excercise {
+public class SetExercise extends Exercise {
     private int currentPhase = 0;
     private SimpleSet<String> setA;
     private SimpleSet<String> setB;
@@ -18,7 +18,7 @@ public class SetExercise extends Excercise {
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         switch (currentPhase) {
             case 0:
                 selectImplementation();

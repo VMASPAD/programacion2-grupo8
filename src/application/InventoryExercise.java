@@ -1,12 +1,16 @@
 package application;
 
-import inventoryModule.modelo.Producto;
+import inventoryModule.model.Product;
 import java.util.Scanner;
 import listModule.SimpleLinkedList;
 import listModule.SimpleList;
 
-public class InventoryExercise extends Excercise {
-    private SimpleList<Producto> inventory;
+/**
+ * Sistema de gestión de inventario de comercio.
+ * Permite buscar, agregar, eliminar, editar y listar productos en el inventario.
+ */
+public class InventoryExercise extends Exercise {
+    private SimpleList<Product> inventory;
     private int currentPhase = 0;
     private boolean showWelcome = true;
 
@@ -16,15 +20,17 @@ public class InventoryExercise extends Excercise {
         initializeSampleData();
     }
 
-    // Inicializa con algunos productos de ejemplo para facilitar las pruebas
+    /**
+     * Inicializa el inventario con algunos productos de ejemplo para facilitar las pruebas.
+     */
     private void initializeSampleData() {
-        inventory.add(new Producto("P001", "Notebook", 1200.00, 5));
-        inventory.add(new Producto("P002", "Mouse", 25.50, 50));
-        inventory.add(new Producto("P003", "Teclado", 85.00, 30));
+        inventory.add(new Product("P001", "Notebook", 1200.00, 5));
+        inventory.add(new Product("P002", "Mouse", 25.50, 50));
+        inventory.add(new Product("P003", "Teclado", 85.00, 30));
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         if (showWelcome) {
             showWelcome = false;
             displayWelcome();
@@ -32,12 +38,18 @@ public class InventoryExercise extends Excercise {
         displayMainMenu();
     }
 
+    /**
+     * Muestra el encabezado de bienvenida del sistema.
+     */
     private void displayWelcome() {
         System.out.println("\n╔═══════════════════════════════════════╗");
         System.out.println("║  SISTEMA DE INVENTARIO DE COMERCIO   ║");
         System.out.println("╚═══════════════════════════════════════╝");
     }
 
+    /**
+     * Muestra el menú principal y procesa la opción seleccionada.
+     */
     private void displayMainMenu() {
         System.out.println("\n┌─── MENÚ PRINCIPAL ───┐");
         System.out.println("│ 1. Buscar Producto   │");
@@ -55,19 +67,19 @@ public class InventoryExercise extends Excercise {
 
             switch (option) {
                 case 1:
-                    buscarProducto();
+                    searchProduct();
                     break;
                 case 2:
-                    agregarProducto();
+                    addProduct();
                     break;
                 case 3:
-                    borrarProducto();
+                    deleteProduct();
                     break;
                 case 4:
-                    editarProducto();
+                    editProduct();
                     break;
                 case 5:
-                    listarProductos();
+                    listProducts();
                     break;
                 case 0:
                     System.out.println("\n✓ Saliendo del sistema de inventario...\n");
@@ -82,18 +94,21 @@ public class InventoryExercise extends Excercise {
         }
     }
 
-    private void buscarProducto() {
+    /**
+     * Busca un producto por su código y lo muestra si existe.
+     */
+    private void searchProduct() {
         System.out.print("\n🔍 Ingresa el código del producto: ");
-        String codigo = scanner.nextLine().trim();
+        String code = scanner.nextLine().trim();
 
-        if (codigo.isEmpty()) {
+        if (code.isEmpty()) {
             System.out.println("❌ El código no puede estar vacío.");
             return;
         }
 
         for (int i = 0; i < inventory.size(); i++) {
-            Producto p = inventory.get(i);
-            if (p.getCodigo().equalsIgnoreCase(codigo)) {
+            Product p = inventory.get(i);
+            if (p.getCode().equalsIgnoreCase(code)) {
                 System.out.println("\n✓ Producto encontrado:");
                 System.out.println("   " + p);
                 return;
@@ -103,65 +118,72 @@ public class InventoryExercise extends Excercise {
         System.out.println("❌ Producto no encontrado.");
     }
 
-    private void agregarProducto() {
+    /**
+     * Agrega un nuevo producto al inventario.
+     * Valida que el código sea único y que los datos sean válidos.
+     */
+    private void addProduct() {
         System.out.println("\n--- Agregar Nuevo Producto ---");
         
         System.out.print("Código del producto: ");
-        String codigo = scanner.nextLine().trim();
+        String code = scanner.nextLine().trim();
 
-        if (codigo.isEmpty()) {
+        if (code.isEmpty()) {
             System.out.println("❌ El código no puede estar vacío.");
             return;
         }
 
         // Verificar que el código sea único
         for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getCodigo().equalsIgnoreCase(codigo)) {
+            if (inventory.get(i).getCode().equalsIgnoreCase(code)) {
                 System.out.println("❌ Ya existe un producto con ese código.");
                 return;
             }
         }
 
         System.out.print("Nombre del producto: ");
-        String nombre = scanner.nextLine().trim();
-        if (nombre.isEmpty()) {
+        String name = scanner.nextLine().trim();
+        if (name.isEmpty()) {
             System.out.println("❌ El nombre no puede estar vacío.");
             return;
         }
 
-        double precio = leerDouble("Precio ($): ");
-        if (precio < 0) {
+        double price = readDouble("Precio ($): ");
+        if (price < 0) {
             System.out.println("❌ El precio no puede ser negativo.");
             return;
         }
 
-        int cantidad = leerInt("Cantidad en stock: ");
-        if (cantidad < 0) {
+        int quantity = readInt("Cantidad en stock: ");
+        if (quantity < 0) {
             System.out.println("❌ La cantidad no puede ser negativa.");
             return;
         }
 
         try {
-            Producto nuevoProducto = new Producto(codigo, nombre, precio, cantidad);
-            inventory.add(nuevoProducto);
+            Product newProduct = new Product(code, name, price, quantity);
+            inventory.add(newProduct);
             System.out.println("✓ Producto agregado exitosamente.");
         } catch (Exception e) {
             System.out.println("❌ Error al agregar el producto: " + e.getMessage());
         }
     }
 
-    private void borrarProducto() {
+    /**
+     * Elimina un producto del inventario por su código.
+     */
+    private void deleteProduct() {
         System.out.print("\n🗑️  Ingresa el código del producto a borrar: ");
-        String codigo = scanner.nextLine().trim();
+        String code = scanner.nextLine().trim();
 
-        if (codigo.isEmpty()) {
+        if (code.isEmpty()) {
             System.out.println("❌ El código no puede estar vacío.");
             return;
         }
 
         for (int i = 0; i < inventory.size(); i++) {
-            Producto p = inventory.get(i);
-            if (p.getCodigo().equalsIgnoreCase(codigo)) {
+            Product p = inventory.get(i);
+            if (p.getCode().equalsIgnoreCase(code)) {
                 inventory.remove(i);
                 System.out.println("✓ Producto borrado exitosamente.");
                 return;
@@ -171,18 +193,21 @@ public class InventoryExercise extends Excercise {
         System.out.println("❌ Producto no encontrado.");
     }
 
-    private void editarProducto() {
+    /**
+     * Edita un producto existente permitiendo cambiar nombre, precio o cantidad.
+     */
+    private void editProduct() {
         System.out.print("\n✏️  Ingresa el código del producto a editar: ");
-        String codigo = scanner.nextLine().trim();
+        String code = scanner.nextLine().trim();
 
-        if (codigo.isEmpty()) {
+        if (code.isEmpty()) {
             System.out.println("❌ El código no puede estar vacío.");
             return;
         }
 
         for (int i = 0; i < inventory.size(); i++) {
-            Producto p = inventory.get(i);
-            if (p.getCodigo().equalsIgnoreCase(codigo)) {
+            Product p = inventory.get(i);
+            if (p.getCode().equalsIgnoreCase(code)) {
                 System.out.println("\nProducto actual: " + p);
                 System.out.println("\n¿Qué deseas editar?");
                 System.out.println("1. Nombre");
@@ -192,28 +217,28 @@ public class InventoryExercise extends Excercise {
                 System.out.print("Opción: ");
 
                 try {
-                    int opcion = scanner.nextInt();
+                    int option = scanner.nextInt();
                     scanner.nextLine();
 
-                    switch (opcion) {
+                    switch (option) {
                         case 1:
                             System.out.print("Nuevo nombre: ");
-                            String nuevoNombre = scanner.nextLine().trim();
-                            if (!nuevoNombre.isEmpty()) {
-                                p.setNombre(nuevoNombre);
+                            String newName = scanner.nextLine().trim();
+                            if (!newName.isEmpty()) {
+                                p.setName(newName);
                                 System.out.println("✓ Nombre actualizado.");
                             } else {
                                 System.out.println("❌ El nombre no puede estar vacío.");
                             }
                             break;
                         case 2:
-                            double nuevoPrecio = leerDouble("Nuevo precio ($): ");
-                            p.setPrecio(nuevoPrecio);
+                            double newPrice = readDouble("Nuevo precio ($): ");
+                            p.setPrice(newPrice);
                             System.out.println("✓ Precio actualizado.");
                             break;
                         case 3:
-                            int nuevaCantidad = leerInt("Nueva cantidad: ");
-                            p.setCantidad(nuevaCantidad);
+                            int newQuantity = readInt("Nueva cantidad: ");
+                            p.setQuantity(newQuantity);
                             System.out.println("✓ Cantidad actualizada.");
                             break;
                         case 0:
@@ -233,29 +258,35 @@ public class InventoryExercise extends Excercise {
         System.out.println("❌ Producto no encontrado.");
     }
 
-    private void listarProductos() {
+    /**
+     * Muestra un listado de todos los productos en el inventario.
+     * Incluye el valor total del inventario.
+     */
+    private void listProducts() {
         if (inventory.isEmpty()) {
             System.out.println("\n📦 El inventario está vacío.");
             return;
         }
 
         System.out.println("\n╔════ LISTADO DE PRODUCTOS ════╗");
-        double valorTotalInventario = 0;
+        double totalInventoryValue = 0;
 
         for (int i = 0; i < inventory.size(); i++) {
-            Producto p = inventory.get(i);
+            Product p = inventory.get(i);
             System.out.println((i + 1) + ". " + p);
-            valorTotalInventario += p.getValorTotal();
+            totalInventoryValue += p.getTotalValue();
         }
 
         System.out.println("╠══════════════════════════════╣");
         System.out.println(String.format("║ VALOR TOTAL DEL INVENTARIO   ║\n║      $%.2f                ║",
-                valorTotalInventario));
+                totalInventoryValue));
         System.out.println("╚══════════════════════════════╝");
     }
 
-    // Métodos auxiliares para leer entrada numérica de forma segura
-    private double leerDouble(String prompt) {
+    /**
+     * Lee un número decimal del usuario con validación y manejo de errores.
+     */
+    private double readDouble(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);
@@ -267,7 +298,10 @@ public class InventoryExercise extends Excercise {
         }
     }
 
-    private int leerInt(String prompt) {
+    /**
+     * Lee un número entero del usuario con validación y manejo de errores.
+     */
+    private int readInt(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);

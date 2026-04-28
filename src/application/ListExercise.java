@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ListExercise extends Excercise {
+public class ListExercise extends Exercise {
     private int currentPhase = 0;
     private final List<String> list;
     private boolean firstTime = true;
@@ -15,7 +15,7 @@ public class ListExercise extends Excercise {
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         switch (currentPhase) {
             case 0:
                 displayMenu();

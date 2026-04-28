@@ -2,22 +2,22 @@ package application;
 
 import java.util.Scanner;
 
-public abstract class Excercise {
+public abstract class Exercise {
     protected boolean running = true;
     protected Scanner scanner;
 
-    public Excercise() {}
+    public Exercise() {}
 
-    public Excercise(Scanner scanner) {
+    public Exercise(Scanner scanner) {
         this.scanner = scanner;
     }
 
     public void run() {
-        System.out.println("Running excercise");
+        System.out.println("Running exercise");
         while (running) {
-            excerciseLogic();
+            exerciseLogic();
         }
     }
 
-    protected abstract void excerciseLogic();
+    protected abstract void exerciseLogic();
 }

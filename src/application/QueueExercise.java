@@ -5,7 +5,7 @@ import queueModule.SimpleArrayQueue;
 import queueModule.SimpleLinkedQueue;
 import queueModule.SimpleQueue;
 
-public class QueueExercise extends Excercise {
+public class QueueExercise extends Exercise {
     private int currentPhase = 0;
     private SimpleQueue<String> queue;
     private String implementationType;
@@ -16,7 +16,7 @@ public class QueueExercise extends Excercise {
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         switch (currentPhase) {
             case 0:
                 selectImplementation();

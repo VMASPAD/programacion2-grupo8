@@ -1,11 +1,11 @@
-package applicationModule.consumerApp.tda;
+package applicationModule.consumerApp.adt;
 
 import java.util.NoSuchElementException;
 
 /**
- * Cola de prioridad implementada con nodos enlazados y prioridad bidireccional.
- * Los elementos con mayor prioridad (menor valor numérico) se desencolan primero.
- * @param <E> Tipo de elemento a almacenar en la cola
+ * Queue of prioridad implementada with nodos enlazados y prioridad bidireccional.
+ * The elements with mayor prioridad (menor value numérico) se desenqueuen primero.
+ * @param <E> Tipo of element a almacenar in the queue
  */
 public class SimpleLinkedPriorityQueue<E> {
     private PriorityLinkedNode<E> first;
@@ -13,16 +13,16 @@ public class SimpleLinkedPriorityQueue<E> {
     private int size;
 
     /**
-     * Encola un elemento con una prioridad específica.
-     * Inserta el elemento en la posición correcta según su prioridad.
+     * Enqueue a element with a prioridad específica.
+     * Inserta the element in the posición correcta según its prioridad.
      * 
-     * @param element Elemento a encolar
-     * @param priority Prioridad del elemento (menor número = mayor prioridad)
+     * @param element Element a enqueuer
+     * @param priority Prioridad dthe element (menor número = mayor prioridad)
      * @throws IllegalArgumentException si element es nulo
      */
     public void enqueue(E element, int priority) {
         if (element == null) {
-            throw new IllegalArgumentException("Error del TDA: No se pueden encolar elementos nulos.");
+            throw new IllegalArgumentException("Error dthe TDA: No se pueden enqueuer elements nulos.");
         }
 
         PriorityLinkedNode<E> newNode = new PriorityLinkedNode<>(element, priority);
@@ -56,14 +56,14 @@ public class SimpleLinkedPriorityQueue<E> {
     }
 
     /**
-     * Desencola y retorna el primer elemento (de mayor prioridad).
+     * Desenqueue y retorna the primer element (de mayor prioridad).
      * 
-     * @return el elemento desencolado
-     * @throws NoSuchElementException si la cola está vacía
+     * @return the element desenqueuedo
+     * @throws NoSuchElementException si the queue está empty
      */
     public E dequeue() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Error del TDA: La cola está vacía.");
+            throw new NoSuchElementException("Error dthe TDA: The queue está empty.");
         }
         E value = first.value;
         first = first.next;
@@ -78,44 +78,44 @@ public class SimpleLinkedPriorityQueue<E> {
     }
 
     /**
-     * Retorna el primer elemento sin desencolarlo.
+     * Retorna the primer element sin desenqueuerlo.
      * 
-     * @return el primer elemento
-     * @throws NoSuchElementException si la cola está vacía
+     * @return the primer element
+     * @throws NoSuchElementException si the queue está empty
      */
     public E peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Error del TDA: La cola está vacía.");
+            throw new NoSuchElementException("Error dthe TDA: The queue está empty.");
         }
         return first.value;
     }
 
     /**
-     * Obtiene la prioridad del primer elemento.
+     * Obtiene the prioridad dthe primer element.
      * 
-     * @return la prioridad del primer elemento
-     * @throws NoSuchElementException si la cola está vacía
+     * @return the prioridad dthe primer element
+     * @throws NoSuchElementException si the queue está empty
      */
     public int getHighestPriority() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Error del TDA: La cola está vacía.");
+            throw new NoSuchElementException("Error dthe TDA: The queue está empty.");
         }
         return first.priority;
     }
 
     /**
-     * Comprueba si la cola está vacía.
+     * Comprueba si the queue está empty.
      * 
-     * @return true si está vacía, false en caso contrario
+     * @return true si está empty, false in caso contrario
      */
     public boolean isEmpty() {
         return size == 0;
     }
 
     /**
-     * Obtiene el tamaño actual de la cola.
+     * Obtiene the tamaño actual of the queue.
      * 
-     * @return número de elementos en la cola
+     * @return número of elements in the queue
      */
     public int size() {
         return size;

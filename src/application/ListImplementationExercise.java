@@ -5,7 +5,7 @@ import listModule.SimpleArrayList;
 import listModule.SimpleLinkedList;
 import listModule.SimpleList;
 
-public class ListImplementationExercise extends Excercise {
+public class ListImplementationExercise extends Exercise {
     private int currentPhase = 0;
     private SimpleList<String> list;
     private String implementationType;
@@ -16,7 +16,7 @@ public class ListImplementationExercise extends Excercise {
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         switch (currentPhase) {
             case 0:
                 selectImplementation();

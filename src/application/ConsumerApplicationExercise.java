@@ -1,8 +1,8 @@
 package application;
 
-import applicationModule.consumerApp.modelo.NivelUrgencia;
-import applicationModule.consumerApp.modelo.Reclamo;
-import applicationModule.consumerApp.tda.SimpleLinkedPriorityQueue;
+import applicationModule.consumerApp.adt.SimpleLinkedPriorityQueue;
+import applicationModule.consumerApp.model.Complaint;
+import applicationModule.consumerApp.model.UrgencyLevel;
 import java.util.Scanner;
 
 /**
@@ -16,42 +16,45 @@ import java.util.Scanner;
  * - Validación exhaustiva de inputs para evitar excepciones del TDA
  * - Interfaz clara con indicadores visuales del estado
  */
-public class ConsumerApplicationExercise extends Excercise {
+public class ConsumerApplicationExercise extends Exercise {
     private int currentPhase = 0;  // 0: menú principal, 1+: acción específica
-    private SimpleLinkedPriorityQueue<Reclamo> colaReclamos;
+    private SimpleLinkedPriorityQueue<Complaint> complaintQueue;
     private boolean showWelcome = true;
     private static final String BORDER = "╔════════════════════════════════════════════════╗";
     private static final String FOOTER = "╚════════════════════════════════════════════════╝";
 
     public ConsumerApplicationExercise(Scanner scanner) {
         super(scanner);
-        this.colaReclamos = new SimpleLinkedPriorityQueue<>();
+        this.complaintQueue = new SimpleLinkedPriorityQueue<>();
     }
 
     @Override
-    protected void excerciseLogic() {
+    protected void exerciseLogic() {
         switch (currentPhase) {
             case 0:
                 mainMenu();
                 break;
             case 1:
-                redactarReclamo();
+                recordComplaint();
                 currentPhase = 0;  // Vuelve al menú principal
                 break;
             case 2:
-                visualizarReclamo();
+                viewComplaint();
                 currentPhase = 0;  // Vuelve al menú principal
                 break;
             case 3:
-                mostrarEstadisticas();
+                displayStatistics();
                 currentPhase = 0;  // Vuelve al menú principal
                 break;
         }
     }
 
+    /**
+     * Muestra el menú principal y maneja la selección del usuario.
+     */
     private void mainMenu() {
         if (showWelcome) {
-            mostrarBienvenida();
+            displayWelcome();
             showWelcome = false;
         }
 
@@ -65,9 +68,9 @@ public class ConsumerApplicationExercise extends Excercise {
         System.out.println(FOOTER);
         System.out.print("▶ Selecciona una opción: ");
 
-        int opcion = leerEnteroSeguro();
+        int option = readSafeInteger();
 
-        switch (opcion) {
+        switch (option) {
             case 1:
                 currentPhase = 1;
                 break;
@@ -86,37 +89,43 @@ public class ConsumerApplicationExercise extends Excercise {
         }
     }
 
-    private void redactarReclamo() {
+    /**
+     * Registra un nuevo reclamo solicitando título, descripción y nivel de urgencia.
+     */
+    private void recordComplaint() {
         System.out.println("\n" + BORDER);
         System.out.println("║   REGISTRAR NUEVO RECLAMO                     ║");
         System.out.println(FOOTER);
 
         System.out.print("▶ Ingrese el título del reclamo: ");
-        String titulo = leerTextoObligatorio();
+        String title = readMandatoryText();
 
         System.out.print("▶ Ingrese la descripción del reclamo: ");
-        String descripcion = leerTextoObligatorio();
+        String description = readMandatoryText();
 
         System.out.println("\n¿Cuál es el nivel de urgencia?");
-        System.out.println("  1. " + NivelUrgencia.CRITICO.getEtiqueta());
-        System.out.println("  2. " + NivelUrgencia.ALTO.getEtiqueta());
-        System.out.println("  3. " + NivelUrgencia.MEDIO.getEtiqueta());
-        System.out.println("  4. " + NivelUrgencia.BAJO.getEtiqueta());
+        System.out.println("  1. " + UrgencyLevel.CRITICAL.getLabel());
+        System.out.println("  2. " + UrgencyLevel.HIGH.getLabel());
+        System.out.println("  3. " + UrgencyLevel.MEDIUM.getLabel());
+        System.out.println("  4. " + UrgencyLevel.LOW.getLabel());
         System.out.print("▶ Seleccione (1-4): ");
 
-        NivelUrgencia urgencia = leerUrgenciaValida();
+        UrgencyLevel urgency = readValidUrgency();
 
         try {
-            Reclamo nuevoReclamo = new Reclamo(titulo, descripcion, urgencia);
-            colaReclamos.enqueue(nuevoReclamo, urgencia.getPeso());
+            Complaint newComplaint = new Complaint(title, description, urgency);
+            complaintQueue.enqueue(newComplaint, urgency.getWeight());
             System.out.println("\n✅ Reclamo registrado exitosamente en la cola de atención.");
         } catch (IllegalArgumentException e) {
             System.out.println("\nError al registrar el reclamo: " + e.getMessage());
         }
     }
 
-    private void visualizarReclamo() {
-        if (colaReclamos.isEmpty()) {
+    /**
+     * Visualiza el siguiente reclamo en la cola y permite resolverlo o dejarlo en espera.
+     */
+    private void viewComplaint() {
+        if (complaintQueue.isEmpty()) {
             System.out.println("\n" + BORDER);
             System.out.println("║   VISUALIZAR RECLAMO                           ║");
             System.out.println(FOOTER);
@@ -128,15 +137,15 @@ public class ConsumerApplicationExercise extends Excercise {
         System.out.println("║   PRÓXIMO RECLAMO A ATENDER                   ║");
         System.out.println(FOOTER);
 
-        Reclamo proximo = null;
+        Complaint next = null;
         try {
-            proximo = colaReclamos.peek();
+            next = complaintQueue.peek();
         } catch (Exception e) {
             System.out.println("Error al obtener reclamo: " + e.getMessage());
             return;
         }
 
-        System.out.println("\n" + proximo.toString());
+        System.out.println("\n" + next.toString());
         System.out.println("\n---------------------------------");
 
         System.out.println("\n¿Qué desea hacer con este reporte?");
@@ -144,40 +153,43 @@ public class ConsumerApplicationExercise extends Excercise {
         System.out.println("  2. Dejar en la cola por ahora");
         System.out.print("▶ Seleccione (1-2): ");
 
-        int opcion = leerEnteroSeguro();
+        int option = readSafeInteger();
 
-        if (opcion == 1) {
+        if (option == 1) {
             try {
-                colaReclamos.dequeue();
+                complaintQueue.dequeue();
                 System.out.println("\n✅ Reclamo resuelto y eliminado del sistema.");
             } catch (Exception e) {
                 System.out.println("\nError al resolver reclamo: " + e.getMessage());
             }
-        } else if (opcion == 2) {
+        } else if (option == 2) {
             System.out.println("\n📋 El reclamo fue conservado en la cola de atención.");
         } else {
             System.out.println("\nOpción inválida.");
         }
     }
 
-    private void mostrarEstadisticas() {
+    /**
+     * Muestra estadísticas de la cola de reclamos.
+     */
+    private void displayStatistics() {
         System.out.println("\n" + BORDER);
         System.out.println("║   ESTADÍSTICAS DE LA COLA                      ║");
         System.out.println(FOOTER);
 
-        if (colaReclamos.isEmpty()) {
+        if (complaintQueue.isEmpty()) {
             System.out.println("✅ No hay reclamos en el sistema actualmente.");
         } else {
-            System.out.println("📊 Total de reclamos en cola: " + colaReclamos.size());
+            System.out.println("📊 Total de reclamos en cola: " + complaintQueue.size());
             System.out.println("⚠️  Prioridad más alta (inmediata): " +
-                    NivelUrgencia.fromIndex(colaReclamos.getHighestPriority()).getEtiqueta());
+                    UrgencyLevel.fromIndex(complaintQueue.getHighestPriority()).getLabel());
         }
     }
 
     /**
      * Lee un entero del usuario con manejo seguro de excepciones.
      */
-    private int leerEnteroSeguro() {
+    private int readSafeInteger() {
         while (true) {
             try {
                 String input = scanner.nextLine().trim();
@@ -195,11 +207,11 @@ public class ConsumerApplicationExercise extends Excercise {
     /**
      * Lee texto obligatorio que no puede estar vacío.
      */
-    private String leerTextoObligatorio() {
+    private String readMandatoryText() {
         while (true) {
-            String texto = scanner.nextLine().trim();
-            if (!texto.isEmpty()) {
-                return texto;
+            String text = scanner.nextLine().trim();
+            if (!text.isEmpty()) {
+                return text;
             }
             System.out.print("Este campo no puede quedar vacío. Intente de nuevo: ");
         }
@@ -208,18 +220,21 @@ public class ConsumerApplicationExercise extends Excercise {
     /**
      * Lee y valida el nivel de urgencia ingresado por el usuario.
      */
-    private NivelUrgencia leerUrgenciaValida() {
+    private UrgencyLevel readValidUrgency() {
         while (true) {
-            int seleccion = leerEnteroSeguro();
-            NivelUrgencia urgencia = NivelUrgencia.fromIndex(seleccion);
-            if (urgencia != null) {
-                return urgencia;
+            int selection = readSafeInteger();
+            UrgencyLevel urgency = UrgencyLevel.fromIndex(selection);
+            if (urgency != null) {
+                return urgency;
             }
             System.out.print("Nivel incorrecto. Ingrese un número del 1 al 4: ");
         }
     }
 
-    private void mostrarBienvenida() {
+    /**
+     * Muestra mensaje de bienvenida al iniciar la aplicación.
+     */
+    private void displayWelcome() {
         System.out.println("\n╔════════════════════════════════════════════════╗");
         System.out.println("║                                                ║");
         System.out.println("║   BIENVENIDO AL SISTEMA DE ATENCIÓN AL        ║");

@@ -1,17 +1,17 @@
 import application.ConsumerApplicationExercise;
-import application.Excercise;
+import application.Exercise;
 import application.InventoryExercise;
 import application.ListExercise;
 import application.ListImplementationExercise;
 import application.QueueExercise;
 import application.SetExercise;
 import application.StackExercise;
-import application.TestExcercise;
+import application.TestExercise;
 import java.util.Scanner;
 
 public class App {
     private boolean running = true;
-    private Excercise excercise;
+    private Exercise exercise;
     protected Scanner scanner;
 
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class App {
         while (running) {
             displayMainMenu();
             if (running) {
-                excercise.run();
+                exercise.run();
             }
         }
         scanner.close();
@@ -53,28 +53,28 @@ public class App {
         
         switch (choice) {
             case 1:
-                excercise = new TestExcercise();
+                exercise = new TestExercise();
                 break;
             case 2:
-                excercise = new ListExercise(scanner);
+                exercise = new ListExercise(scanner);
                 break;
             case 3:
-                excercise = new ListImplementationExercise(scanner);
+                exercise = new ListImplementationExercise(scanner);
                 break;
             case 4:
-                excercise = new StackExercise(scanner);
+                exercise = new StackExercise(scanner);
                 break;
             case 5:
-                excercise = new QueueExercise(scanner);
+                exercise = new QueueExercise(scanner);
                 break;
             case 6:
-                excercise = new SetExercise(scanner);
+                exercise = new SetExercise(scanner);
                 break;
             case 7:
-                excercise = new ConsumerApplicationExercise(scanner);
+                exercise = new ConsumerApplicationExercise(scanner);
                 break;
             case 8:
-                excercise = new InventoryExercise(scanner);
+                exercise = new InventoryExercise(scanner);
                 break;
             case 0:
                 System.out.println("\n¡Programa Terminado!");
