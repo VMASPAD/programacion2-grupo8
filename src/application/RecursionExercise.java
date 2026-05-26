@@ -123,6 +123,7 @@ public class RecursionExercise extends Exercise {
 
     private static void Pyramid(int pisos, int pos) {
         // cada fila mide (2 * pisos - 1) de ancho + 1 char para el salto de línea
+        // calcula todos los caracteres ancho*largo contando los espacios
         int anchoFila = 2 * pisos;
         int totalCaracteres = pisos * anchoFila;
 
