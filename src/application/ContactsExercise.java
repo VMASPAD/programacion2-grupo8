@@ -1,10 +1,9 @@
 package application;
 
 import ContactModule.Contact;
-import treeModule.BST;
-import listModule.SimpleLinkedList;
-
 import java.util.Scanner;
+import listModule.SimpleLinkedList;
+import treeModule.BST;
 
 public class ContactsExercise extends Exercise {
     private int currentPhase = 0;
