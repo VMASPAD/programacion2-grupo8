@@ -98,10 +98,8 @@ public class ContactsExercise extends Exercise {
             return;
         }
         
-        // Validar que sea un número válido
-        try {
-            Integer.parseInt(numero);
-        } catch (NumberFormatException e) {
+        // Validar que contenga solo dígitos
+        if (!numero.matches("\\d+")) {
             System.out.println("❌ El número de teléfono debe contener solo dígitos.");
             return;
         }
@@ -126,7 +124,7 @@ public class ContactsExercise extends Exercise {
         Contact newContact = new Contact(nombre, numero, mail);
         ContactTree.insert(newContact);
         contactSize++;
-        System.out.println("✅ Contacto '" + nombre + "' agregado exitosamente.");
+        System.out.println("Contacto '" + nombre + "' agregado exitosamente.");
     }
 
     // Implementación real: mostrar todos los contactos ordenados
@@ -134,7 +132,7 @@ public class ContactsExercise extends Exercise {
         System.out.println("\n--- Lista de Contactos ---");
         
         if (contactSize == 0) {
-            System.out.println("📭 No hay contactos registrados.");
+            System.out.println(" No hay contactos registrados.");
             return;
         }
 
@@ -153,7 +151,7 @@ public class ContactsExercise extends Exercise {
         System.out.println("\n--- Remover Contacto ---");
         
         if (contactSize == 0) {
-            System.out.println("📭 No hay contactos para remover.");
+            System.out.println(" No hay contactos para remover.");
             return;
         }
 
@@ -165,9 +163,8 @@ public class ContactsExercise extends Exercise {
             return;
         }
 
-        try {
-            Integer.parseInt(numeroAEliminar);
-        } catch (NumberFormatException e) {
+        // Validar que contenga solo dígitos
+        if (!numeroAEliminar.matches("\\d+")) {
             System.out.println("❌ El número de teléfono debe contener solo dígitos.");
             return;
         }
@@ -190,7 +187,7 @@ public class ContactsExercise extends Exercise {
 
         ContactTree.remove(contactToRemove);
         contactSize--;
-        System.out.println("✅ Contacto '" + contactToRemove.getNombre() + "' eliminado exitosamente.");
+        System.out.println(" Contacto '" + contactToRemove.getNombre() + "' eliminado exitosamente.");
     }
 
     // Cargar datos de prueba (propios de los requisitos del TP)
@@ -203,11 +200,11 @@ public class ContactsExercise extends Exercise {
         
         // Datos de prueba pre-programados
         Contact[] testContacts = {
-            new Contact("Juan Pérez", "1234567890", "juan@email.com"),
-            new Contact("María González", "9876543210", "maria@email.com"),
-            new Contact("Carlos López", "5555555555", "carlos@email.com"),
-            new Contact("Ana Martínez", "4444444444", "ana@email.com"),
-            new Contact("Roberto Sánchez", "3333333333", "roberto@email.com")
+            new Contact("Juan Pérez", "541128173229", "juan@email.com"),
+            new Contact("María González", "549876543210", "maria@email.com"),
+            new Contact("Carlos López", "545555555555", "carlos@email.com"),
+            new Contact("Ana Martínez", "544444444444", "ana@email.com"),
+            new Contact("Roberto Sánchez", "543333333333", "roberto@email.com")
         };
         
         for (Contact contact : testContacts) {
@@ -215,7 +212,7 @@ public class ContactsExercise extends Exercise {
             contactSize++;
         }
         
-        System.out.println("✅ Se cargaron " + contactSize + " contactos de prueba.");
+        System.out.println(" Se cargaron " + contactSize + " contactos de prueba.");
     }
 
     // Inicializar con un árbol vacío (los datos se cargan opcionalmente desde el menú)

@@ -27,6 +27,6 @@ public class Contact implements Comparable <Contact> {
 
     @Override
     public int compareTo(Contact otro) {
-        return Integer.compare(Integer.parseInt(this.numero), Integer.parseInt(otro.numero));
+        return Long.compare(Long.parseLong(this.numero), Long.parseLong(otro.numero));
     }
 }
