@@ -89,6 +89,8 @@ public class BST <E extends Comparable<E>>{
     //Pre-Order
     public SimpleLinkedList<E> preOrder(){
         SimpleLinkedList<E> result = new SimpleLinkedList<>();
+        preOrderDFS(root,result);
+        return result;
     }
 
     private void preOrderDFS(TreeNode<E> current, SimpleLinkedList<E> list){
