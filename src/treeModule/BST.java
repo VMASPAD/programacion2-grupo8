@@ -1,7 +1,5 @@
 package treeModule;
 
-
-import listModule.SimpleArrayList;
 import listModule.SimpleLinkedList;
 
 public class BST <E extends Comparable<E>>{
@@ -100,6 +98,4 @@ public class BST <E extends Comparable<E>>{
         preOrderDFS(current.left, list);
         preOrderDFS(current.right, list);
     }
-
-
 }

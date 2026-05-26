@@ -38,19 +38,20 @@ public class App {
     // Recibe entrada del usuario, muestra opciones de ejercicios, instancia el ejercicio seleccionado
     private void displayMainMenu() {
         System.out.println("\n╔══════════════════════════════════════╗");
-        System.out.println("║          MENÚ PRINCIPAL              ║");
-        System.out.println("╠══════════════════════════════════════╣");
-        System.out.println("║ 1. Test Básico                       ║");
-        System.out.println("║ 2. Ejercicio con ArrayList           ║");
-        System.out.println("║ 3. Ejercicio con SimpleList          ║");
-        System.out.println("║ 4. Ejercicio con SimpleStack         ║");
-        System.out.println("║ 5. Ejercicio con SimpleQueue         ║");
-        System.out.println("║ 6. Ejercicio con SimpleSet           ║");
+        System.out.println("║          MENÚ PRINCIPAL               ║");
+        System.out.println("╠═══════════════════════════════════════╣");
+        System.out.println("║ 1. Test Básico                        ║");
+        System.out.println("║ 2. Ejercicio con ArrayList            ║");
+        System.out.println("║ 3. Ejercicio con SimpleList           ║");
+        System.out.println("║ 4. Ejercicio con SimpleStack          ║");
+        System.out.println("║ 5. Ejercicio con SimpleQueue          ║");
+        System.out.println("║ 6. Ejercicio con SimpleSet            ║");
         System.out.println("║ 7. TP6: Aplicación Atención Consumidor║");
-        System.out.println("║ 8. TP7: Sistema de Inventario        ║");
-        System.out.println("║ 9. Ejercicio de Recursion            ║");
-        System.out.println("║ 0. Salir                             ║");
-        System.out.println("╚══════════════════════════════════════╝");
+        System.out.println("║ 8. TP7: Sistema de Inventario         ║");
+        System.out.println("║ 9. Ejercicio de Recursion             ║");
+        System.out.println("║ 10. Ejercicio de Contactos            ║");
+        System.out.println("║ 0. Salir                              ║");
+        System.out.println("╚═══════════════════════════════════════╝");
         System.out.print("▶ Selecciona una opción: ");
         
         int choice = readSafeInteger();
@@ -83,6 +84,9 @@ public class App {
                 break;
             case 9:
                 exercise = new RecursionExercise(scanner);
+                break;
+            case 10:
+                exercise = new ContactsExercise(scanner);
                 break;
             case 0:
                 System.out.println("\n¡Programa Terminado!");
