@@ -82,43 +82,60 @@ public class ContactsExercise extends Exercise {
     // Implementación real: agregar contacto al BST
     private void agregarContacto(){
         System.out.println("\n--- Registrar Nuevo Contacto ---");
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine().trim();
         
-        if (nombre.isEmpty()) {
-            System.out.println("❌ El nombre no puede estar vacío.");
-            return;
-        }
-
-        System.out.print("Número de teléfono: ");
-        String numero = scanner.nextLine().trim();
-        
-        if (numero.isEmpty()) {
-            System.out.println("❌ El número no puede estar vacío.");
-            return;
-        }
-        
-        // Validar que contenga solo dígitos
-        if (!numero.matches("\\d+")) {
-            System.out.println("❌ El número de teléfono debe contener solo dígitos.");
-            return;
-        }
-
-        System.out.print("Email: ");
-        String mail = scanner.nextLine().trim();
-        
-        if (mail.isEmpty()) {
-            System.out.println("❌ El email no puede estar vacío.");
-            return;
-        }
-
-        // Verificar que no exista un contacto con el mismo nombre
-        SimpleLinkedList<Contact> allContacts = ContactTree.preOrder();
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getNombre().equalsIgnoreCase(nombre)) {
-                System.out.println("❌ Ya existe un contacto con el nombre '" + nombre + "'.");
-                return;
+        String nombre;
+        while (true) {
+            System.out.print("Nombre: ");
+            nombre = scanner.nextLine().trim();
+            if (nombre.isEmpty()) {
+                System.out.println("❌ El nombre no puede estar vacío. Intente nuevamente.");
+                continue;
             }
+            
+            // Verificar que no exista un contacto con el mismo nombre
+            boolean existe = false;
+            SimpleLinkedList<Contact> allContacts = ContactTree.preOrder();
+            for (int i = 0; i < allContacts.size(); i++) {
+                if (allContacts.get(i).getNombre().equalsIgnoreCase(nombre)) {
+                    existe = true;
+                    break;
+                }
+            }
+            if (existe) {
+                System.out.println("❌ Ya existe un contacto con el nombre '" + nombre + "'. Intente con otro nombre.");
+                continue;
+            }
+            break;
+        }
+
+        String numero;
+        while (true) {
+            System.out.print("Número de teléfono: ");
+            numero = scanner.nextLine().trim();
+            
+            if (numero.isEmpty()) {
+                System.out.println("❌ El número no puede estar vacío. Intente nuevamente.");
+                continue;
+            }
+            
+            // Validar que contenga solo dígitos
+            if (!numero.matches("\\d+")) {
+                System.out.println("❌ El número de teléfono debe contener solo dígitos. Intente nuevamente.");
+                continue;
+            }
+            break;
+        }
+
+        String mail;
+        while (true) {
+            System.out.print("Email: ");
+            mail = scanner.nextLine().trim();
+            
+            if (mail.isEmpty()) {
+                System.out.println("❌ El email no puede estar vacío. Intente nuevamente.");
+                continue;
+            }
+            break;
         }
 
         Contact newContact = new Contact(nombre, numero, mail);
