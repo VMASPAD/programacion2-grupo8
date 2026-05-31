@@ -3,16 +3,16 @@ package application;
 import ContactModule.Contact;
 import java.util.Scanner;
 import listModule.SimpleLinkedList;
-import treeModule.BST;
+import treeModule.AVLTree;
 
 public class ContactsExercise extends Exercise {
     private int currentPhase = 0;
-    private BST<Contact> ContactTree;
+    private AVLTree<Contact> ContactTree;
     private int contactSize = 0;
 
     public ContactsExercise(Scanner scanner) {
         super(scanner);
-        this.ContactTree = new BST<>();
+        this.ContactTree = new AVLTree<>();
         initializeTestData();
     }
 
@@ -212,7 +212,7 @@ public class ContactsExercise extends Exercise {
         System.out.println("\n--- Cargando datos de prueba ---");
         
         // Limpiar contactos existentes
-        ContactTree = new BST<>();
+        ContactTree = new AVLTree<>();
         contactSize = 0;
         
         // Datos de prueba pre-programados

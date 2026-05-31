@@ -683,3 +683,136 @@ SimpleList<Producto> inventory = new SimpleLinkedList<>();
 5. **¿Qué es la complejidad espacial?**
    - Cuánta memoria adicional usa el algoritmo (no contar input)
 
+
+---
+
+## TP08 - Árboles Binarios de Búsqueda (BST)
+
+Un **Árbol Binario de Búsqueda (BST)** es una estructura de datos jerárquica en la que cada nodo tiene como máximo dos hijos (izquierdo y derecho). 
+
+### Propiedad Fundamental:
+Para cualquier nodo `N`:
+* Todos los valores en el **subárbol izquierdo** son **menores** que el valor de `N`.
+* Todos los valores en el **subárbol derecho** son **mayores** que el valor de `N`.
+
+### Operaciones Principales e Implementación:
+
+**1. Inserción:** 
+Se compara el valor a insertar con la raíz y se recorre hacia la izquierda o derecha según corresponda hasta encontrar una posición vacía (nodo `null`). En nuestro proyecto, esto se implementa usando la interfaz `Comparable` (`compareTo`):
+
+```java
+protected TreeNode<E> insertRecursive(TreeNode<E> current, E value) {
+    // Caso base: encontramos un lugar vacio
+    if (current == null) {
+        size++;
+        return new TreeNode<E>(value);
+    }
+    
+    // Comparación (-1 = "menor", 1 = "mayor", 0 = "igual")
+    int comparison = value.compareTo(current.value);
+    
+    if (comparison < 0) {
+        current.left = insertRecursive(current.left, value);
+    } else if (comparison > 0) {
+        current.right = insertRecursive(current.right, value);
+    }
+    
+    return current; // No se permiten duplicados
+}
+```
+
+**2. Remoción:**
+Es la operación más compleja. Tiene tres casos:
+1. **Hoja:** se reemplaza por `null`.
+2. **Un solo hijo:** se reemplaza el nodo por su único hijo.
+3. **Dos hijos:** se busca el sucesor (el mínimo del lado derecho), se copia el valor, y luego se elimina el sucesor.
+
+Ejemplo en nuestro código de cómo resolvemos cuando existen ambos hijos (Caso 3):
+```java
+// Caso 3: tiene ambos hijos
+// Buscamos el minimo de la derecha (el sucesor)
+TreeNode<E> succesor =  getMinNode(current.right);
+// Pisamos al nodo con el valor del sucesor
+current.value = succesor.value;
+// Y removemos el sucesor original de su rama derecha
+current.right = removeRecursive(current.right, succesor.value);
+```
+
+### Recorridos Comunes (DFS):
+* **Pre-order (Pre-orden)**: Raíz -> Izquierda -> Derecha. Muy útil para persistencia o copiar árboles porque visita la raíz antes que las hojas.
+* **In-order (En-orden)**: Izquierda -> Raíz -> Derecha. Especialmente en BST, garantiza que visitamos a los nodos ordenados de menor a mayor.
+* **Post-order (Post-orden)**: Izquierda -> Derecha -> Raíz. 
+
+---
+
+## TP09 - Árboles AVL
+
+Un **Árbol AVL** (Adelson-Velsky y Landis) es un tipo de BST auto-balanceable. Su principal problema a resolver es el peor caso del BST: cuando se insertan elementos ya ordenados, un BST común degenera en una simple lista enlazada asimétrica, degradando el tiempo de búsqueda a $O(n)$. 
+
+### Propiedad y Factor de Balance:
+Para asegurar logaritmicidad, se requiere que la altura del subárbol izquierdo y el subárbol derecho para cualquier nodo, difieran en máximo uno (1 o -1 o 0).
+
+```text
+Factor de Balance = Altura(Izquierda) - Altura(Derecha)
+```
+
+En nuestro `AVLTree`, el factor se calcula así:
+```java
+private int getBalance(TreeNode<E> N) {
+    if (N == null) return 0;
+    return height(N.left) - height(N.right);
+}
+```
+
+### Rotaciones en Código:
+Cuando al volver de la recursión durante la inserción/remoción detectamos que un nivel quedó con un `balance > 1` o `balance < -1`, debemos efectuar **rotaciones**.
+
+Por ejemplo, la **Rotación a la Derecha** (usada en sobrepeso izquierdo) "sube" al hijo izquierdo `x`, y baja al padre desbalanceado `y`, ajustando la rama huérfana `T2`:
+
+```java
+private TreeNode<E> rightRotate(TreeNode<E> y) {
+    TreeNode<E> x = y.left;
+    TreeNode<E> T2 = x.right; // Hijo derecho de x pasa a ser hijo izq de y
+
+    x.right = y;
+    y.left = T2;
+
+    // Actualizamos las alturas de ambos nodos
+    y.height = max(height(y.left), height(y.right)) + 1;
+    x.height = max(height(x.left), height(x.right)) + 1;
+
+    return x; // Retorna la nueva cima local
+}
+```
+
+### Manejo de los 4 Casos durante Inserción (`insertRecursive`): 
+
+Tras insertar como BST convencional, el AVL verifica las alturas y repara rotando según el lado desbalanceado y de qué lado se produjo la inserción original:
+
+```java
+// 3. Obtener el factor de balance
+int balance = getBalance(current);
+
+// Caso 1: Izquierda Izquierda (rotación simple)
+if (balance > 1 && value.compareTo(current.left.value) < 0)
+    return rightRotate(current);
+
+// Caso 2: Derecha Derecha (rotación simple)
+if (balance < -1 && value.compareTo(current.right.value) > 0)
+    return leftRotate(current);
+
+// Caso 3: Izquierda Derecha (rotación doble)
+if (balance > 1 && value.compareTo(current.left.value) > 0) {
+    current.left = leftRotate(current.left); // Preparo
+    return rightRotate(current);             // Finalizo
+}
+
+// Caso 4: Derecha Izquierda (rotación doble)
+if (balance < -1 && value.compareTo(current.right.value) < 0) {
+    current.right = rightRotate(current.right); // Preparo
+    return leftRotate(current);                 // Finalizo
+}
+```
+
+### Costos Computacionales:
+Al rotar y mantener la base balanceada en tiempo de ejecución, se garantiza que la altura nunca exceda el nivel logarítmico global. Las operaciones de **búsqueda, inserción y remoción** son garantizadas de ser **$O(\log n)$** en todos los casos, mejorando el límite de $O(n)$ del BST estándar.

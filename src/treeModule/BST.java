@@ -4,7 +4,7 @@ import listModule.SimpleLinkedList;
 
 public class BST <E extends Comparable<E>>{
     public TreeNode<E> root = null;
-    private int size = 0;
+    protected int size = 0;
 
     public void insert (E value){
         root = insertRecursive(root ,value);
@@ -14,7 +14,7 @@ public class BST <E extends Comparable<E>>{
     //Puede recibir null con el espacio vacio
     // puede que devuelva el mismo nodo que recibio
 
-    private TreeNode<E> insertRecursive (TreeNode<E> current , E value){
+    protected TreeNode<E> insertRecursive (TreeNode<E> current , E value){
         //caso base: encontramos un lugar vacio
         //Insertamos en ese lugar, devolviendo uno nuevo
 
@@ -38,10 +38,10 @@ public class BST <E extends Comparable<E>>{
     }
 
     public void remove(E value){
-        removeRecursive(root, value);
+        root = removeRecursive(root, value);
     }
 
-    public TreeNode<E> removeRecursive(TreeNode<E> current,E value){
+    protected TreeNode<E> removeRecursive(TreeNode<E> current,E value){
         if(current == null) return null; // caso base: llegamos al final y no estaba el value ( no hay nada para remover)
 
         int comparison = value.compareTo(current.value);
@@ -78,7 +78,7 @@ public class BST <E extends Comparable<E>>{
     }
 
     //para encontrar el minino, vamos a la  izquierda a fondo
-    private TreeNode<E> getMinNode(TreeNode<E> current){
+    protected TreeNode<E> getMinNode(TreeNode<E> current){
         while (current.left != null)
             current = current.left;
         return current;
@@ -91,7 +91,7 @@ public class BST <E extends Comparable<E>>{
         return result;
     }
 
-    private void preOrderDFS(TreeNode<E> current, SimpleLinkedList<E> list){
+    protected void preOrderDFS(TreeNode<E> current, SimpleLinkedList<E> list){
         if (current == null) return;
 
         list.add(current.value);
