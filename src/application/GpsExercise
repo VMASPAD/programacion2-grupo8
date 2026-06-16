@@ -2,11 +2,11 @@ package application;
 
 import java.util.Scanner;
 
-public class GPSExercise extends Exercise {
+public class GpsExercise extends Exercise {
 
     private ListGraph<String> mapa;
 
-    public GPSExercise(Scanner scanner) {
+    public GpsExercise(Scanner scanner) {
         super(scanner);
 
         mapa = new ListGraph<>();
