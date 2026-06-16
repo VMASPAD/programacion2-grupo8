@@ -29,18 +29,18 @@ public class ListGraph <T> implements Graph<T>{
 
     @Override
     public boolean removeVertex(T vertex) {
-         if (!containsVertex(vertex))
-            return false;
-
-        adjacencyList.remove(vertex);
+           if (!containsVertex(vertex))
+        return false;
 
         T[] vertices = vertices();
 
         for (int i = 0; i < vertices.length; i++) {
             removeEdge(vertices[i], vertex);
-        }
+    }
 
-        return true;
+    adjacencyList.remove(vertex);
+
+    return true;
     }
 
     @Override
@@ -109,8 +109,7 @@ public class ListGraph <T> implements Graph<T>{
         if (!containsVertex(from))
             return null;
 
-        SimpleList<Edge<T>> edges =
-                adjacencyList.get(from);
+        SimpleList<Edge<T>> edges =  adjacencyList.get(from);
 
         for (int i = 0; i < edges.size(); i++) {
 
@@ -145,4 +144,31 @@ public class ListGraph <T> implements Graph<T>{
             }
         }
     }
+
+    private void buscarCamino() {
+
+    System.out.print("Origen: ");
+    String origen = scanner.nextLine();
+
+    System.out.print("Destino: ");
+    String destino = scanner.nextLine();
+
+    if (!mapa.containsVertex(origen)) {
+        System.out.println("La ciudad de origen no existe.");
+        return;
+    }
+
+    if (!mapa.containsVertex(destino)) {
+        System.out.println("La ciudad de destino no existe.");
+        return;
+    }
+
+    int distancia = shortestDistance(origen, destino);
+
+    if (distancia == Integer.MAX_VALUE) {
+        System.out.println("No existe un camino entre ambas ciudades.");
+    } else {
+        System.out.println("Distancia mínima: " + distancia + " km");
+    }
+}
 }

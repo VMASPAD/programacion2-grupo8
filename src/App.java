@@ -50,6 +50,7 @@ public class App {
         System.out.println("║ 8. TP7: Sistema de Inventario         ║");
         System.out.println("║ 9. Ejercicio de Recursion             ║");
         System.out.println("║ 10. Ejercicio de Contactos            ║");
+        System.out.println("║ 11. Ejercicio de GPS                  ║");
         System.out.println("║ 0. Salir                              ║");
         System.out.println("╚═══════════════════════════════════════╝");
         System.out.print("▶ Selecciona una opción: ");
@@ -88,6 +89,10 @@ public class App {
             case 10:
                 exercise = new ContactsExercise(scanner);
                 break;
+            case 11:
+                exercise = new GpsExercise(scanner);
+                break;
+
             case 0:
                 System.out.println("\n¡Programa Terminado!");
                 running = false;
