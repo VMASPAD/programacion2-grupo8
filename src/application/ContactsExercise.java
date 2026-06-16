@@ -35,6 +35,10 @@ public class ContactsExercise extends Exercise {
                 currentPhase = 0;  // Vuelve al menú principal
                 break;
             case 4:
+                editarContacto();
+                currentPhase = 0;
+                break;
+            case 5:
                 cargarDatos();
                 currentPhase = 0;
                 break;
@@ -49,7 +53,8 @@ public class ContactsExercise extends Exercise {
         System.out.println("║ 1. Registrar nuevo contacto                    ║");
         System.out.println("║ 2. Ver todos los contactos                     ║");
         System.out.println("║ 3. Remover contacto                            ║");
-        System.out.println("║ 4. Cargar datos de prueba                      ║");
+        System.out.println("║ 4. Editar contacto                             ║");
+        System.out.println("║ 5. Cargar datos de prueba                      ║");
         System.out.println("║ 0. Salir                                       ║");
         System.out.println("╚════════════════════════════════════════════════╝");
         System.out.print("▶ Selecciona una opción: ");
@@ -70,12 +75,15 @@ public class ContactsExercise extends Exercise {
             case 4:
                 currentPhase = 4;
                 break;
+            case 5:
+                currentPhase = 5;
+                break;
             case 0:
                 running = false;
-                System.out.println("\n¡Aplicación terminada!");
+                System.out.println("\n✓ Volviendo al menú principal...\n");
                 break;
             default:
-                System.out.println("❌ Opción inválida. Por favor, ingrese 0, 1, 2, 3 o 4.");
+                System.out.println("❌ Opción inválida. Por favor, ingrese un número entre 0 y 5.");
         }
     }
 
@@ -205,6 +213,117 @@ public class ContactsExercise extends Exercise {
         ContactTree.remove(contactToRemove);
         contactSize--;
         System.out.println(" Contacto '" + contactToRemove.getNombre() + "' eliminado exitosamente.");
+    }
+
+    private void editarContacto() {
+        System.out.println("\n--- Editar Contacto ---");
+
+        if (contactSize == 0) {
+            System.out.println(" No hay contactos para editar.");
+            return;
+        }
+
+        System.out.print("Ingrese el número de teléfono del contacto a editar: ");
+        String numeroBuscar = scanner.nextLine().trim();
+
+        if (numeroBuscar.isEmpty()) {
+            System.out.println("❌ El número no puede estar vacío.");
+            return;
+        }
+
+        if (!numeroBuscar.matches("\\d+")) {
+            System.out.println("❌ El número de teléfono debe contener solo dígitos.");
+            return;
+        }
+
+        SimpleLinkedList<Contact> allContacts = ContactTree.preOrder();
+        Contact contactoActual = null;
+        for (int i = 0; i < allContacts.size(); i++) {
+            Contact contact = allContacts.get(i);
+            if (contact.getNumero().equals(numeroBuscar)) {
+                contactoActual = contact;
+                break;
+            }
+        }
+
+        if (contactoActual == null) {
+            System.out.println("❌ No se encontró contacto con el número '" + numeroBuscar + "'.");
+            return;
+        }
+
+        System.out.println("\nContacto actual:");
+        System.out.println(contactoActual);
+
+        String nombre;
+        while (true) {
+            System.out.print("Nuevo nombre (Enter para mantener '" + contactoActual.getNombre() + "'): ");
+            nombre = scanner.nextLine().trim();
+            if (nombre.isEmpty()) {
+                nombre = contactoActual.getNombre();
+                break;
+            }
+
+            boolean existe = false;
+            for (int i = 0; i < allContacts.size(); i++) {
+                Contact contact = allContacts.get(i);
+                if (!contact.getNumero().equals(numeroBuscar)
+                        && contact.getNombre().equalsIgnoreCase(nombre)) {
+                    existe = true;
+                    break;
+                }
+            }
+            if (existe) {
+                System.out.println("❌ Ya existe otro contacto con el nombre '" + nombre + "'.");
+                continue;
+            }
+            break;
+        }
+
+        String numero;
+        while (true) {
+            System.out.print("Nuevo número (Enter para mantener '" + contactoActual.getNumero() + "'): ");
+            numero = scanner.nextLine().trim();
+            if (numero.isEmpty()) {
+                numero = contactoActual.getNumero();
+                break;
+            }
+
+            if (!numero.matches("\\d+")) {
+                System.out.println("❌ El número de teléfono debe contener solo dígitos.");
+                continue;
+            }
+
+            if (!numero.equals(contactoActual.getNumero())) {
+                boolean duplicado = false;
+                for (int i = 0; i < allContacts.size(); i++) {
+                    if (allContacts.get(i).getNumero().equals(numero)) {
+                        System.out.println("❌ Ya existe un contacto con el número '" + numero + "'.");
+                        duplicado = true;
+                        break;
+                    }
+                }
+                if (duplicado)
+                    continue;
+            }
+            break;
+        }
+
+        String mail;
+        while (true) {
+            System.out.print("Nuevo email (Enter para mantener '" + contactoActual.getMail() + "'): ");
+            mail = scanner.nextLine().trim();
+            if (mail.isEmpty()) {
+                mail = contactoActual.getMail();
+            }
+            if (!mail.isEmpty())
+                break;
+            System.out.println("❌ El email no puede estar vacío.");
+        }
+
+        ContactTree.remove(contactoActual);
+        Contact contactoEditado = new Contact(nombre, numero, mail);
+        ContactTree.insert(contactoEditado);
+        System.out.println("✓ Contacto actualizado exitosamente.");
     }
 
     // Cargar datos de prueba (propios de los requisitos del TP)

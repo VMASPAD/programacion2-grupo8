@@ -1,17 +1,20 @@
+package graphModule;
 
+import dictionaryModule.SimpleArrayDictionary;
+import dictionaryModule.SimpleDictionary;
+import listModule.SimpleLinkedList;
+import listModule.SimpleList;
 
-//elegimos GPS
-public class ListGraph <T> implements Graph<T>{
+public class ListGraph<T> implements Graph<T> {
     private SimpleDictionary<T, SimpleList<Edge<T>>> adjacencyList;
 
     public ListGraph() {
         adjacencyList = new SimpleArrayDictionary<>();
     }
 
-@Override
-    public T [] vertices() {
-         return adjacencyList.keys();
-        
+    @Override
+    public T[] vertices() {
+        return adjacencyList.keys();
     }
 
     @Override
@@ -25,23 +28,23 @@ public class ListGraph <T> implements Graph<T>{
 
     @Override
     public boolean removeVertex(T vertex) {
-           if (!containsVertex(vertex))
-        return false;
+        if (!containsVertex(vertex))
+            return false;
 
         T[] vertices = vertices();
 
         for (int i = 0; i < vertices.length; i++) {
             removeEdge(vertices[i], vertex);
-    }
+        }
 
-    adjacencyList.remove(vertex);
+        adjacencyList.remove(vertex);
 
-    return true;
+        return true;
     }
 
     @Override
     public boolean addEdge(T from, T to, int weight) {
-         addVertex(from);
+        addVertex(from);
         addVertex(to);
 
         Edge<T> edge = getEdge(from, to);
@@ -62,7 +65,7 @@ public class ListGraph <T> implements Graph<T>{
 
     @Override
     public boolean removeEdge(T from, T to) {
-         Edge<T> edge = getEdge(from, to);
+        Edge<T> edge = getEdge(from, to);
 
         if (edge != null) {
             adjacencyList.get(from).remove(edge);
@@ -84,16 +87,16 @@ public class ListGraph <T> implements Graph<T>{
 
     @Override
     public int getWeight(T from, T to) {
-         Edge<T> edge = getEdge(from, to);
+        Edge<T> edge = getEdge(from, to);
 
         if (edge == null)
             return -1;
 
         return edge.getWeight();
     }
-      @Override
-    public SimpleList<Edge<T>> getNeighbors(T vertex) {
 
+    @Override
+    public SimpleList<Edge<T>> getNeighbors(T vertex) {
         if (!containsVertex(vertex))
             return null;
 
@@ -101,14 +104,12 @@ public class ListGraph <T> implements Graph<T>{
     }
 
     private Edge<T> getEdge(T from, T to) {
-
         if (!containsVertex(from))
             return null;
 
-        SimpleList<Edge<T>> edges =  adjacencyList.get(from);
+        SimpleList<Edge<T>> edges = adjacencyList.get(from);
 
         for (int i = 0; i < edges.size(); i++) {
-
             Edge<T> edge = edges.get(i);
 
             if (edge.getDestination().equals(to))
@@ -119,52 +120,26 @@ public class ListGraph <T> implements Graph<T>{
     }
 
     public void printGraph() {
-
         T[] vertices = vertices();
 
-        for (int i = 0; i < vertices.length; i++) {
+        if (vertices.length == 0) {
+            System.out.println("(El mapa no tiene rutas cargadas)");
+            return;
+        }
 
-            SimpleList<Edge<T>> edges =
-                    adjacencyList.get(vertices[i]);
+        for (int i = 0; i < vertices.length; i++) {
+            SimpleList<Edge<T>> edges = adjacencyList.get(vertices[i]);
 
             for (int j = 0; j < edges.size(); j++) {
-
                 Edge<T> edge = edges.get(j);
 
                 System.out.println(
                         vertices[i]
-                                + " -> "
+                                + " → "
                                 + edge.getDestination()
                                 + ": "
                                 + edge.getWeight());
             }
         }
     }
-
-    private void buscarCamino() {
-
-    System.out.print("Origen: ");
-    String origen = scanner.nextLine();
-
-    System.out.print("Destino: ");
-    String destino = scanner.nextLine();
-
-    if (!mapa.containsVertex(origen)) {
-        System.out.println("La ciudad de origen no existe.");
-        return;
-    }
-
-    if (!mapa.containsVertex(destino)) {
-        System.out.println("La ciudad de destino no existe.");
-        return;
-    }
-
-    int distancia = shortestDistance(origen, destino);
-
-    if (distancia == Integer.MAX_VALUE) {
-        System.out.println("No existe un camino entre ambas ciudades.");
-    } else {
-        System.out.println("Distancia mínima: " + distancia + " km");
-    }
-}
 }
