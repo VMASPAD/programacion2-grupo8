@@ -1,0 +1,177 @@
+package application;
+import dictionaryModule.SimpleDictionary;
+import dictionaryModule.SimpleArrayDictionary;
+import java.util.Scanner;
+
+public class GpsExercise extends Exercise {
+
+    private ListGraph<String> mapa;
+
+    public GpsExercise(Scanner scanner) {
+        super(scanner);
+
+        mapa = new ListGraph<>();
+
+        cargarMapa();
+        System.out.println("=== MAPA CARGADO ===");
+        mapa.printGraph();
+    }
+
+    private void cargarMapa() {
+
+        mapa.addEdge("Buenos Aires", "Rosario", 300);
+        mapa.addEdge("Rosario", "Cordoba", 400);
+        mapa.addEdge("Cordoba", "Mendoza", 600);
+    }
+
+    @Override
+    protected void exerciseLogic() {
+
+        System.out.println("\n=== GPS ===");
+        System.out.println("1. Mostrar mapa");
+        System.out.println("2. Buscar camino más corto");
+        System.out.println("3. Agregar ruta");
+        System.out.println("4. Eliminar ruta");
+        System.out.println("0. Salir");
+        System.out.print("Ingrese opción: ");
+
+        int opcion = readSafeInt();
+        scanner.nextLine();
+
+        switch (opcion) {
+
+            case 1:
+                mapa.printGraph();
+                break;
+
+            case 2:
+                buscarCamino();
+                break;
+
+            case 3:
+                agregarRuta();
+                break;
+            
+            case 4:
+                eliminarRuta();
+                break;
+
+            case 0:
+                running = false;
+                break;
+
+            default:
+                System.out.println("Opción inválida");
+        }
+    }
+
+   private int buscarCamino(String origen, String destino) {
+
+    String[] vertices = mapa.vertices();
+
+    SimpleDictionary<String, Integer> distancia = new SimpleArrayDictionary<>();
+
+    SimpleDictionary<String, Boolean> visitado =new SimpleArrayDictionary<>();
+
+    for (int i = 0; i < vertices.length; i++) {
+
+        distancia.put(vertices[i], Integer.MAX_VALUE);
+        visitado.put(vertices[i], false);
+    }
+
+    distancia.put(origen, 0);
+
+    while (true) {
+
+        String actual = null;
+        int menor = Integer.MAX_VALUE;
+
+        // Buscar el vértice no visitado
+        // con menor distancia
+
+        for (int i = 0; i < vertices.length; i++) {
+
+            if (!visitado.get(vertices[i]) &&
+                    distancia.get(vertices[i]) < menor) {
+
+                menor = distancia.get(vertices[i]);
+                actual = vertices[i];
+            }
+        }
+
+        if (actual == null)
+            break;
+
+        visitado.put(actual, true);
+
+        SimpleList<Edge<String>> vecinos =
+                mapa.getNeighbors(actual);
+
+        for (int i = 0; i < vecinos.size(); i++) {
+
+            Edge<String> edge = vecinos.get(i);
+
+            int nuevaDistancia =
+                    distancia.get(actual)
+                    + edge.getWeight();
+
+            if (nuevaDistancia <
+                    distancia.get(edge.getDestination())) {
+
+                distancia.put(
+                        edge.getDestination(),
+                        nuevaDistancia);
+            }
+        }
+    }
+
+    return distancia.get(destino);
+}
+
+public void agregarRuta(){
+
+    System.out.print("Ciudad origen: ");
+    String origen = scanner.nextLine();
+
+    System.out.print("Ciudad destino: ");
+    String destino = scanner.nextLine();
+
+    System.out.print("Distancia: ");
+    int distancia = readSafeInt();
+    scanner.nextLine();
+
+    boolean resultado =
+            mapa.addEdge(origen, destino, distancia);
+
+    if (resultado) {
+        System.out.println("Ruta agregada correctamente.");
+    } else {
+        System.out.println("La ruta ya existía.");
+    }
+
+    System.out.println("\n=== MAPA ACTUAL ===");
+    mapa.printGraph();
+
+}
+
+public void eliminarRuta(){
+    System.out.print("Ciudad origen: ");
+    String origen = scanner.nextLine();
+
+    System.out.print("Ciudad destino: ");
+    String destino = scanner.nextLine();
+
+    boolean resultado =
+            mapa.removeEdge(origen, destino);
+
+    if (resultado) {
+        System.out.println("Ruta eliminada correctamente.");
+    } else {
+        System.out.println("La ruta no existe.");
+    }
+
+    System.out.println("\n=== MAPA ACTUAL ===");
+    mapa.printGraph();
+
+}
+}

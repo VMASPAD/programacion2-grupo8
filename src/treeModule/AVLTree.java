@@ -15,7 +15,7 @@ public class AVLTree<E extends Comparable<E>> extends BST<E> {
     private TreeNode<E> rightRotate(TreeNode<E> y) {
         TreeNode<E> x = y.left;
         TreeNode<E> T2 = x.right;
-
+ 
         x.right = y;
         y.left = T2;
 

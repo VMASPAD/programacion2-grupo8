@@ -1,0 +1,46 @@
+package graphModule;
+
+public class Edge <T>{
+    public T destination;
+    public int weight;
+
+    public Edge(T destination, int weight) {
+        this.destination = destination;
+        this.weight = weight;
+    }
+
+    public T getDestination() {
+        return destination;
+    }
+
+    public void setDestination(T destination) {
+        this.destination = destination;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+     @Override
+        public boolean equals(Object obj) {
+
+        if (this == obj)
+            return true;
+
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        Edge<?> other = (Edge<?>) obj;
+
+        return destination.equals(other.destination)
+                && weight == other.weight;
+    }
+    @Override
+    public String toString() {
+        return destination + " (" + weight + ")";
+    }
+}
