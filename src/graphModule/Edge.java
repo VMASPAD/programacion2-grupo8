@@ -1,3 +1,5 @@
+package graphModule;
+
 public class Edge <T>{
     public T destination;
     public int weight;

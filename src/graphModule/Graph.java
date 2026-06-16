@@ -1,3 +1,5 @@
+import graphModule.Edge;
+
 public interface Graph <T>{
     public T []vertices();
     public boolean addVertex(T vertex);

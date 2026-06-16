@@ -1,7 +1,3 @@
-import list.SimpleList;
-import list.SimpleLinkedList;
-import dictionaryModule.SimpleDictionary;
-import dictionaryModule.SimpleArrayDictionary;
 
 
 //elegimos GPS

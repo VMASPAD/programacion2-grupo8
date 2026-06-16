@@ -1,5 +1,6 @@
 package application;
-
+import dictionaryModule.SimpleDictionary;
+import dictionaryModule.SimpleArrayDictionary;
 import java.util.Scanner;
 
 public class GpsExercise extends Exercise {
